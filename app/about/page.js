@@ -324,11 +324,9 @@ assert_eq!(shared_secret, decrypted_secret);`,
               >
                 <span>⚡</span> ABOUT ATHERMIND PLATFORM
               </div>
-              <h1
-                className="hero-title"
-                style={{ fontSize: '2.5rem', fontWeight: 900, lineHeight: 1.2, letterSpacing: '-0.02em', marginBottom: '16px' }}
-              >
-                Enterprise AI, Living 3D Digital Twins & Zero-Trust Governance
+              <h1 className="hero-title">
+                <span className="hero-line">Enterprise AI & Living 3D Digital Twins</span>
+                <span className="hero-line"><span className="gradient-text">Zero-Trust Governance & Security</span></span>
               </h1>
               <p className="hero-sub" style={{ fontSize: '1.05rem', lineHeight: '1.6', color: 'rgba(255,255,255,0.85)', marginBottom: '24px' }}>
                 AtherMind is the flagship enterprise platform suite developed by Aguna Solutions. Engineered for mission-critical IT, cloud, and industrial edge environments, AtherMind unifies Zero-Trust Database Security, Predictive Maintenance, and Aviation Telemetry AI.

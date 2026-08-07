@@ -18,11 +18,9 @@ export const metadata = {
   description:
     'AtherMind (Aguna Solutions) — Driving Digital Transformation with AI, Cloud Native DevSecOps, Big Data Analytics, Cyber Security (24/7 Managed NOC/SOC) & Robotics.',
   icons: {
-    icon: [
-      { url: '/favicon.png', type: 'image/png' },
-      { url: '/favicon.ico' },
-    ],
-    shortcut: '/favicon.ico',
+    icon: '/assets/fav3.webp',
+    shortcut: '/assets/fav3.webp',
+    apple: '/assets/fav3.webp',
   },
 };
 
@@ -30,6 +28,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" data-theme="dark" data-scroll-behavior="smooth" suppressHydrationWarning className={montserrat.variable}>
       <head>
+        <link rel="icon" href="/assets/fav3.webp" type="image/webp" />
+        <link rel="shortcut icon" href="/assets/fav3.webp" type="image/webp" />
+        <link rel="apple-touch-icon" href="/assets/fav3.webp" />
         <Script id="theme-init" strategy="beforeInteractive">
           {`
             (function() {

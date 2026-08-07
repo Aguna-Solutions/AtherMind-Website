@@ -578,9 +578,10 @@ export default function ProductsPage() {
 
               <h1 className="hero-title">
                 <span className="hero-line">
-                  <span className="hero-word" data-cursor="lg">
-                    AI Digital Twins, Database Security & Managed Ops
-                  </span>
+                  <span className="hero-word" data-cursor="lg">AI Digital Twins & Database Security</span>
+                </span>
+                <span className="hero-line">
+                  <span className="hero-word gradient-text" data-cursor="lg">24/7 Managed Platform Operations</span>
                 </span>
               </h1>
 

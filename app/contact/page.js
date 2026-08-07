@@ -46,11 +46,11 @@ export default function ContactPage() {
       <section className="cta" id="contact">
         <div className="container">
           <header className="section-head">
-            <h2 className="section-title">
-              Company & <br />
-              <span className="gradient-text">Contact Details.</span>
-            </h2>
-            <p className="section-sub">
+            <h1 className="hero-title">
+              <span className="hero-line">Company & Engineering</span>
+              <span className="hero-line"><span className="gradient-text">Contact Details.</span></span>
+            </h1>
+            <p className="hero-sub">
               Get in touch with our engineering and 24/7 NOC / SOC operations teams.
             </p>
           </header>

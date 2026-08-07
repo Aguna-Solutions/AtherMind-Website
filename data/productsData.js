@@ -1,8 +1,8 @@
 export const controlPlaneData = {
   dam: {
     name: 'AtherMind IntelliDAM (Zero-Trust Database Security)',
-    theme: 'teal-theme',
-    accentColor: '#14b8a6',
+    theme: 'theme-emerald',
+    accentColor: '#10b981',
     subtitle:
       'AtherMind IntelliDAM secures every database transaction with a unified Zero-Trust control plane that monitors traffic, applies inline query policies dynamically, and governs the full lifecycle from cloud core to industrial edge.',
     topLoop: 'AGENTIC ANOMALY DETECTION & REAL TIME QUERY INTERCEPT',
@@ -63,8 +63,8 @@ export const controlPlaneData = {
   },
   pdm: {
     name: 'Metronik PDM (Predictive Maintenance AI Digital Twin)',
-    theme: 'cyan-theme',
-    accentColor: '#06b6d4',
+    theme: 'theme-blue',
+    accentColor: '#3b82f6',
     subtitle:
       'Metronik PDM fuses IIoT sensor telemetry and autonomous drone feeds into a living 3D digital replica, predicting equipment failure 14 days before breakdown with 95%+ accuracy.',
     topLoop: 'REAL-TIME IIOT SENSOR & AUTONOMOUS DRONE TELEMETRY INGESTION',
@@ -121,8 +121,8 @@ export const controlPlaneData = {
   },
   aero: {
     name: 'AtherMind AeroPulse (Aviation AI Telemetry)',
-    theme: 'teal-theme',
-    accentColor: '#22d3ee',
+    theme: 'theme-purple',
+    accentColor: '#a855f7',
     subtitle:
       'AeroPulse transforms terabytes of flight telemetry (ACARS, FOQA, EHM) into live aircraft digital twins, forecasting engine decay and eliminating AOG delays across commercial fleets.',
     topLoop: 'AVIONICS & FLIGHT DATALINK TELEMETRY STREAM INGESTION',

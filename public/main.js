@@ -2257,4 +2257,43 @@ if (modalDetailSpec) {
   }
 })();
 
+// =========================================================
+// SCROLL REVEAL INTERSECTION OBSERVER ENGINE
+// =========================================================
+const initScrollReveal = () => {
+  const elements = document.querySelectorAll(
+    '.card, .product-card, .service-card, .principle-card, .stat-card, .glass-panel, .section-title, .hero-title, .tech-card, .timeline-item, .benefit-card, .client-card, .hero-badge'
+  );
+
+  elements.forEach((el, idx) => {
+    if (!el.classList.contains('reveal-on-scroll')) {
+      el.classList.add('reveal-on-scroll');
+      if (idx % 3 === 1) el.classList.add('reveal-zoom');
+    }
+  });
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+        }
+      });
+    },
+    {
+      threshold: 0.12,
+      rootMargin: '0px 0px -30px 0px',
+    }
+  );
+
+  document.querySelectorAll('.reveal-on-scroll').forEach((el) => observer.observe(el));
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initScrollReveal);
+} else {
+  initScrollReveal();
+}
+
+
 

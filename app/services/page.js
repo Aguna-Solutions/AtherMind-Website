@@ -136,85 +136,121 @@ export default function ServicesPage() {
           <div className="container">
             <div className="service-buttons-grid">
               <a href="https://www.agunasolutions.com/services" target="_blank" rel="noopener noreferrer" className="service-redirect-btn glass-panel theme-emerald">
-                <div className="srv-icon-box">
-                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                  </svg>
+                <div className="srv-card-head">
+                  <div className="srv-icon-box">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg>
+                  </div>
+                  <span className="srv-tag">24/7 MANAGED SOC</span>
                 </div>
-                <div className="srv-info">
-                  <span className="srv-tag">24/7 Managed SOC</span>
+                <div className="srv-card-main">
                   <h3 className="srv-title">Managed SOC & Cyber Security</h3>
+                  <p className="srv-short-desc">Proactive 24/7 threat hunting, SIEM log monitoring, and automated incident response.</p>
                 </div>
-                <div className="srv-arrow-box"><span className="srv-arrow">↗</span></div>
+                <div className="srv-card-foot">
+                  <span className="srv-action-label">Explore Specification</span>
+                  <div className="srv-arrow-box"><span className="srv-arrow">↗</span></div>
+                </div>
               </a>
 
               <a href="https://www.agunasolutions.com/services" target="_blank" rel="noopener noreferrer" className="service-redirect-btn glass-panel theme-blue">
-                <div className="srv-icon-box">
-                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2">
-                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
-                    <line x1="8" y1="21" x2="16" y2="21" />
-                    <line x1="12" y1="17" x2="12" y2="21" />
-                  </svg>
-                </div>
-                <div className="srv-info">
+                <div className="srv-card-head">
+                  <div className="srv-icon-box">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+                      <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                      <line x1="8" y1="21" x2="16" y2="21" />
+                      <line x1="12" y1="17" x2="12" y2="21" />
+                    </svg>
+                  </div>
                   <span className="srv-tag">99.999% NOC SLA</span>
-                  <h3 className="srv-title">Managed NOC Operations</h3>
                 </div>
-                <div className="srv-arrow-box"><span className="srv-arrow">↗</span></div>
+                <div className="srv-card-main">
+                  <h3 className="srv-title">Managed NOC Operations</h3>
+                  <p className="srv-short-desc">Zero-downtime infrastructure monitoring, multi-cloud networking, and round-the-clock ops.</p>
+                </div>
+                <div className="srv-card-foot">
+                  <span className="srv-action-label">Explore Specification</span>
+                  <div className="srv-arrow-box"><span className="srv-arrow">↗</span></div>
+                </div>
               </a>
 
               <a href="https://www.agunasolutions.com/services" target="_blank" rel="noopener noreferrer" className="service-redirect-btn glass-panel theme-purple">
-                <div className="srv-icon-box">
-                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2">
-                    <polyline points="16 18 22 12 16 6" />
-                    <polyline points="8 6 2 12 8 18" />
-                  </svg>
+                <div className="srv-card-head">
+                  <div className="srv-icon-box">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+                      <polyline points="16 18 22 12 16 6" />
+                      <polyline points="8 6 2 12 8 18" />
+                    </svg>
+                  </div>
+                  <span className="srv-tag">HIGH-THROUGHPUT</span>
                 </div>
-                <div className="srv-info">
-                  <span className="srv-tag">High-Throughput</span>
+                <div className="srv-card-main">
                   <h3 className="srv-title">Web & Mobile App Development</h3>
+                  <p className="srv-short-desc">High-performance software architectures engineered for extreme throughput and scale.</p>
                 </div>
-                <div className="srv-arrow-box"><span className="srv-arrow">↗</span></div>
+                <div className="srv-card-foot">
+                  <span className="srv-action-label">Explore Specification</span>
+                  <div className="srv-arrow-box"><span className="srv-arrow">↗</span></div>
+                </div>
               </a>
 
               <a href="https://www.agunasolutions.com/services" target="_blank" rel="noopener noreferrer" className="service-redirect-btn glass-panel theme-cyan">
-                <div className="srv-icon-box">
-                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" />
-                  </svg>
+                <div className="srv-card-head">
+                  <div className="srv-icon-box">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" />
+                    </svg>
+                  </div>
+                  <span className="srv-tag">K8S & MULTI-CLOUD</span>
                 </div>
-                <div className="srv-info">
-                  <span className="srv-tag">K8s & Multi-Cloud</span>
+                <div className="srv-card-main">
                   <h3 className="srv-title">Cloud Native & DevSecOps</h3>
+                  <p className="srv-short-desc">Kubernetes container orchestration, automated CI/CD, and Zero-Trust security governance.</p>
                 </div>
-                <div className="srv-arrow-box"><span className="srv-arrow">↗</span></div>
+                <div className="srv-card-foot">
+                  <span className="srv-action-label">Explore Specification</span>
+                  <div className="srv-arrow-box"><span className="srv-arrow">↗</span></div>
+                </div>
               </a>
 
               <a href="https://www.agunasolutions.com/services" target="_blank" rel="noopener noreferrer" className="service-redirect-btn glass-panel theme-indigo">
-                <div className="srv-icon-box">
-                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2">
-                    <circle cx="11" cy="11" r="8" />
-                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                  </svg>
-                </div>
-                <div className="srv-info">
+                <div className="srv-card-head">
+                  <div className="srv-icon-box">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+                      <circle cx="11" cy="11" r="8" />
+                      <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    </svg>
+                  </div>
                   <span className="srv-tag">OWASP & PTES</span>
-                  <h3 className="srv-title">VAPT & Security Audit</h3>
                 </div>
-                <div className="srv-arrow-box"><span className="srv-arrow">↗</span></div>
+                <div className="srv-card-main">
+                  <h3 className="srv-title">VAPT & Security Audit</h3>
+                  <p className="srv-short-desc">Deep penetration testing, vulnerability scanning, and regulatory compliance auditing.</p>
+                </div>
+                <div className="srv-card-foot">
+                  <span className="srv-action-label">Explore Specification</span>
+                  <div className="srv-arrow-box"><span className="srv-arrow">↗</span></div>
+                </div>
               </a>
 
               <a href="https://www.agunasolutions.com/services" target="_blank" rel="noopener noreferrer" className="service-redirect-btn glass-panel theme-teal">
-                <div className="srv-icon-box">
-                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2">
-                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-                  </svg>
+                <div className="srv-card-head">
+                  <div className="srv-icon-box">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+                      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                    </svg>
+                  </div>
+                  <span className="srv-tag">LLM & INTELLIGENT RPA</span>
                 </div>
-                <div className="srv-info">
-                  <span className="srv-tag">LLM & Intelligent RPA</span>
+                <div className="srv-card-main">
                   <h3 className="srv-title">Enterprise AI & Automation</h3>
+                  <p className="srv-short-desc">Custom LLM integrations, predictive analytics engines, and automated workflow robotics.</p>
                 </div>
-                <div className="srv-arrow-box"><span className="srv-arrow">↗</span></div>
+                <div className="srv-card-foot">
+                  <span className="srv-action-label">Explore Specification</span>
+                  <div className="srv-arrow-box"><span className="srv-arrow">↗</span></div>
+                </div>
               </a>
             </div>
           </div>
