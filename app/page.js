@@ -1,312 +1,288 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
-import dynamic from 'next/dynamic';
-import { controlPlaneData } from '../data/productsData';
-
-// Dynamic Imports for Below-the-Fold Sections (Reduces Initial JS Payload & Accelerates LCP)
-const TechShowcaseSection = dynamic(() => import('../components/sections/TechShowcaseSection'));
-const ImpactSection = dynamic(() => import('../components/sections/ImpactSection'));
-const ProductsSection = dynamic(() => import('../components/sections/ProductsSection'));
-const ServicesSection = dynamic(() => import('../components/sections/ServicesSection'));
-const ClientsSection = dynamic(() => import('../components/sections/ClientsSection'));
-const AboutSection = dynamic(() => import('../components/sections/AboutSection'));
-const ContactSection = dynamic(() => import('../components/sections/ContactSection'));
+import DynamicTextRotator from '../components/DynamicTextRotator';
+import TechShowcaseSection from '../components/sections/TechShowcaseSection';
+import ImpactSection from '../components/sections/ImpactSection';
+import ProductsSection from '../components/sections/ProductsSection';
+import ServicesSection from '../components/sections/ServicesSection';
+import ClientsSection from '../components/sections/ClientsSection';
+import AboutSection from '../components/sections/AboutSection';
+import ContactSection from '../components/sections/ContactSection';
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState('dam');
-  const [gifSrc, setGifSrc] = useState('/AtherMind_IntelliDAM.gif');
-  const [activeClientIndex, setActiveClientIndex] = useState(0);
-
-  const clientShowcases = [
-    {
-      id: 'star-air',
-      name: 'Star Air',
-      logo: 'https://www.agunasolutions.com/images/Our%20Customers/as_starair.png',
-      tag: 'COMMERCIAL AVIATION',
-      headline: 'Eliminating AOG maintenance delays with predictive AI flight telemetry.',
-      quote:
-        '"AtherMind AeroPulse provided our engineering teams real-time predictive insights that slashed aircraft-on-ground delay incidents by over 50% across our fleet."',
-      img: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=1200&q=80',
-    },
-    {
-      id: 'gnfc',
-      name: 'GNFC',
-      logo: 'https://www.agunasolutions.com/images/Our%20Customers/as_gnfc.png',
-      tag: 'CHEMICALS & FERTILIZERS',
-      headline: 'Zero-Trust Database Governance & SQL Activity Inspection for ERP Infrastructure.',
-      quote:
-        '"IntelliDAM ensured sub-5ms SQL query inspection across our SAP core database, preventing unauthorized data exfiltration with zero performance impact."',
-      img: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80',
-    },
-    {
-      id: 'musashi',
-      name: 'Musashi',
-      logo: 'https://www.agunasolutions.com/images/Our%20Customers/as_musashi.png',
-      tag: 'AUTOMOTIVE MANUFACTURING',
-      headline: 'AI Digital Twin & IIoT Predictive Maintenance for High-Precision Manufacturing Lines.',
-      quote:
-        '"Metronik PDM detected motor vibration anomalies 14 days before failure, saving millions in potential assembly line downtime."',
-      img: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&q=80',
-    },
-    {
-      id: 'npst',
-      name: 'NPST',
-      logo: 'https://www.agunasolutions.com/images/Our%20Customers/as_npst.png',
-      tag: 'FINANCIAL TECH & PAYMENTS',
-      headline: '24/7 Managed SOC & Zero-Latency DB Security for High-Volume Digital Payments.',
-      quote:
-        '"Aguna Solutions SOC team provides 24/7 monitoring and threat mitigation, maintaining 99.999% SLA uptime for millions of daily transactions."',
-      img: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=1200&q=80',
-    },
-    {
-      id: 'tynor',
-      name: 'Tynor',
-      logo: 'https://www.agunasolutions.com/images/Our%20Customers/as_tynor.png',
-      tag: 'HEALTHCARE & MEDICAL DEVICES',
-      headline: 'Smart Cloud Native DevSecOps & Automated Warehouse Telemetry.',
-      quote:
-        '"Our cloud infrastructure scalability and security posture were transformed with automated DevSecOps pipelines and 24/7 NOC monitoring."',
-      img: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=80',
-    },
-    {
-      id: 'ntn',
-      name: 'NTN',
-      logo: 'https://www.agunasolutions.com/images/Our%20Customers/as_ntn.png',
-      tag: 'PRECISION INDUSTRIAL BEARINGS',
-      headline: 'IIoT SCADA Telemetry Ingestion & Real-Time Equipment Health Monitoring.',
-      quote:
-        '"AtherMind IIoT platform ingests 100K+ sensor samples per second, giving our plant managers a live 3D operational twin."',
-      img: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80',
-    },
-    {
-      id: 'orange',
-      name: 'Orange Business',
-      logo: 'https://www.agunasolutions.com/images/Our%20Customers/as_orange.png',
-      tag: 'GLOBAL TELECOM & CLOUD',
-      headline: 'Multi-Cloud Infrastructure Automation & Managed NOC Services.',
-      quote:
-        '"Aguna Solutions delivered seamless multi-cloud orchestration and round-the-clock incident response across our regional data centers."',
-      img: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80',
-    },
-    {
-      id: 'zones',
-      name: 'Zones',
-      logo: 'https://www.agunasolutions.com/images/Our%20Customers/as_zones.png',
-      tag: 'ENTERPRISE IT SOLUTIONS',
-      headline: 'VAPT Security Audits & Continuous Cloud Compliance Architecture.',
-      quote:
-        '"The VAPT security audit and continuous threat intelligence from AtherMind allowed us to achieve ISO 27001 certification in record time."',
-      img: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80',
-    },
-    {
-      id: 'marg',
-      name: 'Marg on Cloud',
-      logo: 'https://www.agunasolutions.com/images/Our%20Customers/as_margoncloud.png',
-      tag: 'CLOUD SAAS & ERP',
-      headline: 'High-Throughput Web Microservices & Zero-Downtime DB Replication.',
-      quote:
-        '"Our SaaS ERP platform handles peak seasonal loads effortlessly thanks to AtherMind database scaling and microservices architecture."',
-      img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80',
-    },
-  ];
-
-  const currentClient = clientShowcases[activeClientIndex] || clientShowcases[0];
-  const nextClientIndex = (activeClientIndex + 1) % clientShowcases.length;
-  const nextClient = clientShowcases[nextClientIndex];
-
-  useEffect(() => {
-    // Restart GIF animation from frame 0 on every page refresh or visit
-    setGifSrc(`/AtherMind_IntelliDAM.gif?v=${Date.now()}`);
-  }, []);
-
-  const activeData = controlPlaneData[activeTab] || controlPlaneData['dam'];
-  useEffect(() => {
-    const preloader = document.getElementById('preloader');
-    if (preloader) {
-      setTimeout(() => {
-        preloader.classList.add('is-done');
-        preloader.style.display = 'none';
-        document.body.style.overflow = '';
-      }, 300);
-    }
-    document.body.style.overflow = '';
-
-    if (typeof window !== 'undefined' && window.initAthermind) {
-      window.initAthermind();
-    }
-  }, []);
-
   return (
     <>
-      {/* Preloader */}
-      <div className="preloader" id="preloader" aria-hidden="true">
-        <div className="preloader-inner">
-          <div className="preloader-text">
-            <span className="preloader-line" style={{ '--d': '.1s' }}>A</span>
-            <span className="preloader-line" style={{ '--d': '.15s' }}>t</span>
-            <span className="preloader-line" style={{ '--d': '.2s' }}>h</span>
-            <span className="preloader-line" style={{ '--d': '.25s' }}>e</span>
-            <span className="preloader-line" style={{ '--d': '.3s' }}>r</span>
-            <span className="preloader-line" style={{ '--d': '.35s' }}>M</span>
-            <span className="preloader-line" style={{ '--d': '.4s' }}>i</span>
-            <span className="preloader-line" style={{ '--d': '.45s' }}>n</span>
-            <span className="preloader-line" style={{ '--d': '.5s' }}>d</span>
-          </div>
-          <div className="preloader-bar"><span className="preloader-bar-fill"></span></div>
+      {/* 1. HERO SECTION WITH CINEMATIC CYBER VIDEO BACKGROUND */}
+      <section className="hero-section" id="home" style={{ position: 'relative', overflow: 'hidden', minHeight: 'clamp(620px, 86vh, 880px)', display: 'flex', alignItems: 'center', backgroundColor: '#070d18' }}>
+        {/* Authentic Freepik Cyber Security & Data Protection HD Video Stage */}
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            overflow: 'hidden',
+            pointerEvents: 'none',
+            zIndex: 0,
+          }}
+          aria-hidden="true"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/assets/provenrun_hero_animation.gif"
+            alt="AtherMind Sovereign Cyber Defense"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: '70% center',
+              opacity: 0.72,
+              filter: 'brightness(1.05) contrast(1.10)',
+            }}
+          />
+          {/* Directional Contrast Scrim: Preserves left typography while showcasing animated holographic shield */}
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background:
+                'linear-gradient(90deg, rgba(6, 11, 23, 0.94) 0%, rgba(6, 11, 23, 0.78) 46%, rgba(6, 11, 23, 0.32) 78%, rgba(6, 11, 23, 0.12) 100%), linear-gradient(180deg, rgba(6, 11, 23, 0.35) 0%, transparent 42%, rgba(6, 11, 23, 0.92) 100%)',
+            }}
+          />
         </div>
-      </div>
 
-      {/* Custom cursor */}
-      <div className="cursor" id="cursor" aria-hidden="true">
-        <div className="cursor-dot"></div>
-        <div className="cursor-ring"></div>
-      </div>
+        <div className="container" style={{ position: 'relative', zIndex: 1, width: '100%' }}>
+          <div className="hero-content" style={{ maxWidth: '900px' }}>
+            <span className="hero-tagline" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', marginBottom: '1.25rem' }}>
+              <span className="badge-pulse-dot" style={{ backgroundColor: 'var(--brand-blue)' }} />
+              CODE · SHIELD · EVOLVE
+            </span>
 
-      {/* WebGL canvas (background) */}
-      <canvas id="bg-canvas" className="bg-canvas" aria-hidden="true"></canvas>
-      <div className="bg-ambient-spotlights" aria-hidden="true">
-        <div className="bg-spotlight-top"></div>
-        <div className="bg-spotlight-mid"></div>
-        <div className="bg-spotlight-bottom"></div>
-      </div>
-      <div className="grid-overlay" aria-hidden="true"></div>
-      <div className="noise-overlay" aria-hidden="true"></div>
+            <h1
+              className="text-display hero-title"
+              style={{
+                marginBottom: '1.25rem',
+                lineHeight: '1.16',
+                letterSpacing: '-0.02em',
+                color: '#ffffff',
+              }}
+            >
+              <span style={{ display: 'block' }}>
+                Build Intelligent Systems.
+              </span>
+              <span style={{ display: 'block', marginTop: '6px' }}>
+                Protect
+              </span>
+              <span style={{ display: 'block', marginTop: '4px', minHeight: '1.2em' }}>
+                <DynamicTextRotator words={['Database Assets.', 'Zero-Trust Defenses.', 'Aviation Fleets.', 'Industrial Lines.', 'Banking Rails.']} />
+              </span>
+            </h1>
 
-      <main id="top">
-        {/* ==================== 1. HOME SECTION ==================== */}
-        <section className="hero" id="home">
-          <div className="hero-grid">
-            <div className="hero-content">
-              <br /><br />
-              <h1 className="hero-title">
-                <span className="hero-line">
-                  <span className="hero-word" data-cursor="lg">Architecting</span>{' '}
-                  <span className="hero-word" data-cursor="lg">Mission-Critical</span>
-                </span>
-                <span className="hero-line">
-                  <span className="hero-word animated-hero-word">
-                    <span id="heroRotatingWord" className="gradient-text">Predictive AI Engines</span>
-                  </span>
-                </span>
-                <span className="hero-line">
-                  <span className="hero-word italic">for High-Scale Enterprises.</span>
-                </span>
-              </h1>
+            <p
+              className="hero-lead"
+              style={{
+                fontSize: '0.92rem',
+                color: '#cbd5e1',
+                lineHeight: '1.65',
+                marginBottom: '1.75rem',
+                maxWidth: '680px',
+              }}
+            >
+              AtherMind by Aguna Solutions architects mission-critical digital systems for global enterprises—unifying zero-trust database defense, living digital twins, and autonomous telemetry into a sovereign operational platform.
+            </p>
 
-              <p className="hero-sub">
-                Transforming complex enterprise challenges into resilient digital solutions with predictive AI, zero-trust security, and 24/7 managed infrastructure.
-              </p>
+            <div className="hero-actions" style={{ marginBottom: '2.25rem', gap: '12px', display: 'flex', flexWrap: 'wrap' }}>
+              <a
+                href="#products"
+                className="btn btn-primary"
+                style={{ padding: '9px 18px', fontSize: '0.86rem', minHeight: '38px', borderRadius: '8px' }}
+              >
+                <span>Explore Platform Suite</span>
+                <span className="btn-arrow">↓</span>
+              </a>
+              <Link
+                href="/contact"
+                className="btn btn-secondary"
+                style={{ padding: '9px 18px', fontSize: '0.86rem', minHeight: '38px', borderRadius: '8px' }}
+              >
+                <span>Talk to an Expert</span>
+                <span className="btn-arrow">→</span>
+              </Link>
             </div>
 
-            {/* CYBER SHIELD SHOWCASE */}
-            <div className="hero-visual">
-              <div className="hero-shield-card" id="heroShieldCard">
-                <div className="shield-glow-backdrop"></div>
-                <div className="shield-svg-wrapper">
-                  <svg className="shield-svg" viewBox="0 0 320 380" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                      <linearGradient id="shieldGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#22d3ee" stopOpacity="0.8" />
-                        <stop offset="50%" stopColor="#14b8a6" stopOpacity="0.65" />
-                        <stop offset="100%" stopColor="#cbd5e1" stopOpacity="0.75" />
-                      </linearGradient>
-                      <linearGradient id="shieldGradGlow" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#22d3ee" stopOpacity="0.15" />
-                        <stop offset="100%" stopColor="#0d9488" stopOpacity="0.04" />
-                      </linearGradient>
-                      <filter id="shieldGlow" x="-20%" y="-20%" width="140%" height="140%">
-                        <feGaussianBlur stdDeviation="8" result="blur" />
-                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                      </filter>
-                    </defs>
-
-                    <path className="shield-path-bg" d="M160 20 L270 70 V180 C270 265 160 330 160 330 C160 330 50 265 50 180 V70 L160 20 Z" fill="url(#shieldGradGlow)" stroke="url(#shieldGrad1)" strokeWidth="2.5" filter="url(#shieldGlow)" />
-                    <path className="shield-path-inner" d="M160 45 L245 85 V175 C245 240 160 295 160 295 C160 295 75 240 75 175 V85 L160 45 Z" stroke="rgba(203, 213, 225, 0.35)" strokeWidth="1.5" strokeDasharray="5 4" />
-                    <circle className="shield-ring ring-outer" cx="160" cy="170" r="75" stroke="rgba(34, 211, 238, 0.35)" strokeWidth="1.5" strokeDasharray="10 6" />
-                    <circle className="shield-ring ring-inner" cx="160" cy="170" r="50" stroke="rgba(20, 184, 166, 0.45)" strokeWidth="1.5" />
-                    <g className="shield-core-emblem">
-                      <path d="M160 130 L190 150 V185 L160 205 L130 185 V150 Z" fill="rgba(13, 148, 136, 0.22)" stroke="#22d3ee" strokeWidth="1.75" />
-                      <path d="M148 168 L157 177 L174 160" stroke="#22d3ee" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                    </g>
-                    <line className="shield-scanline" x1="50" y1="70" x2="270" y2="70" stroke="#67e8f9" strokeWidth="1.5" opacity="0.5" />
-                  </svg>
-                </div>
-
-                <div className="floating-badge badge-top-right glass-panel">
-                  <div className="badge-icon green">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5">
-                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                    </svg>
-                  </div>
-                  <div className="badge-info">
-                    <span className="badge-title">Zero-Trust Shield</span>
-                    <span className="badge-status">100% Immutable Active</span>
-                  </div>
-                </div>
-
-                <div className="floating-badge badge-bottom-left glass-panel">
-                  <div className="badge-icon purple">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5">
-                      <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-                    </svg>
-                  </div>
-                  <div className="badge-info">
-                    <span className="badge-title">Predictive AI Engine</span>
-                    <span className="badge-status">99.9% Threat Intercept</span>
-                  </div>
-                </div>
-
-                <div className="floating-badge badge-center-right glass-panel">
-                  <div className="badge-icon cyan">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5">
-                      <circle cx="12" cy="12" r="10" />
-                      <path d="M12 6v6l4 2" />
-                    </svg>
-                  </div>
-                  <div className="badge-info">
-                    <span className="badge-title">24/7 SOC Telemetry</span>
-                    <span className="badge-status">0.4ms Latency SLA</span>
-                  </div>
-                </div>
+            {/* Verified Proof Strip - Strictly 1 Line */}
+            <div
+              className="hero-proof-bar"
+              style={{
+                background: 'rgba(11, 17, 32, 0.75)',
+                backdropFilter: 'blur(10px)',
+                borderRadius: '10px',
+                border: '1px solid rgba(85, 164, 255, 0.2)',
+                padding: '10px 18px',
+                display: 'inline-flex',
+                flexWrap: 'nowrap',
+                alignItems: 'center',
+                gap: '1.35rem',
+                maxWidth: '100%',
+                overflowX: 'auto',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              <div className="hero-proof-item" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap', flexShrink: 0, fontSize: '0.82rem' }}>
+                <span className="proof-icon-check" style={{ color: 'var(--brand-blue)', fontWeight: 'bold' }}>✓</span>
+                <span style={{ color: '#e2e8f0', fontWeight: 500 }}>NIST SP 800-207 Zero-Trust</span>
+              </div>
+              <div className="hero-proof-item" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap', flexShrink: 0, fontSize: '0.82rem' }}>
+                <span className="proof-icon-check" style={{ color: 'var(--brand-blue)', fontWeight: 'bold' }}>✓</span>
+                <span style={{ color: '#e2e8f0', fontWeight: 500 }}>Sub-5ms Query Enforcement</span>
+              </div>
+              <div className="hero-proof-item" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap', flexShrink: 0, fontSize: '0.82rem' }}>
+                <span className="proof-icon-check" style={{ color: 'var(--brand-blue)', fontWeight: 'bold' }}>✓</span>
+                <span style={{ color: '#e2e8f0', fontWeight: 500 }}>14-Day Failure Prediction</span>
+              </div>
+              <div className="hero-proof-item" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap', flexShrink: 0, fontSize: '0.82rem' }}>
+                <span className="proof-icon-check" style={{ color: 'var(--brand-blue)', fontWeight: 'bold' }}>✓</span>
+                <span style={{ color: '#e2e8f0', fontWeight: 500 }}>ISO 27001 &amp; SOC 2 Ready</span>
               </div>
             </div>
           </div>
-        </section>
+        </div>
 
-        {/* Interactive Tech Preview Showcase */}
-        <TechShowcaseSection />
+        {/* Live Telemetry Floating Pill in Hero Bottom-Right */}
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '24px',
+            right: '24px',
+            zIndex: 2,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            backgroundColor: 'rgba(11, 17, 32, 0.85)',
+            backdropFilter: 'blur(12px)',
+            border: '1px solid rgba(85, 164, 255, 0.3)',
+            borderRadius: 'var(--radius-full)',
+            padding: '6px 14px',
+            fontSize: '0.74rem',
+            color: '#22d3ee',
+            fontWeight: 750,
+          }}
+          className="hero-live-indicator"
+        >
+          <span className="badge-pulse-dot" style={{ backgroundColor: '#22d3ee', width: '6px', height: '6px' }} />
+          <span>24/7 Sovereign Cyber Defense Active</span>
+        </div>
+      </section>
 
-        {/* Impact & Operating Philosophy Section */}
-        <ImpactSection />
+      {/* 2. THE ENTERPRISE CHALLENGE SECTION */}
+      <section className="section-spacing" style={{ backgroundColor: 'var(--bg-subtle)', borderTop: '1px solid var(--brand-silver)', borderBottom: '1px solid var(--brand-silver)' }}>
+        <div className="container">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 'clamp(2rem, 4vw, 3.5rem)', alignItems: 'center' }}>
+            <div>
+              <span className="badge-pill badge-pill-blue">The Enterprise Reality</span>
+              <h2 className="text-h2" style={{ marginBottom: '1rem' }}>
+                Complex Systems Demand <span className="text-blue-gradient">Proactive Engineering</span>
+              </h2>
+              <p className="text-body" style={{ marginBottom: '1.25rem' }}>
+                As enterprise architectures expand across hybrid multi-cloud backbones, industrial edge IoT, and distributed microservices, traditional perimeter security and reactive maintenance fail to protect critical data.
+              </p>
+              <p className="text-body">
+                AtherMind bridges this operational gap by continuously monitoring real-time telemetry, applying inline enforcement at the database kernel level, and predicting equipment anomalies weeks before they disrupt business continuity.
+              </p>
+            </div>
 
-        {/* ==================== 2. PRODUCTS SECTION (HEROIC TELEMETRY SHOWCASE) ==================== */}
-        <ProductsSection activeTab={activeTab} setActiveTab={setActiveTab} activeData={activeData} />
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <div className="card-enterprise" style={{ padding: '1.25rem 1.5rem' }}>
+                <div style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--brand-blue)', marginBottom: '4px' }}>
+                  CHALLENGE 01
+                </div>
+                <div style={{ fontSize: '1.05rem', fontWeight: 700, color: '#ffffff', marginBottom: '4px' }}>
+                  Database Exfiltration &amp; Privileged Access Leaks
+                </div>
+                <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)' }}>
+                  Traditional firewalls cannot inspect mid-flight SQL transactions or prevent compromised DBA accounts from leaking sensitive datasets.
+                </p>
+              </div>
 
-        {/* ==================== 3. SERVICES SECTION ==================== */}
-        <ServicesSection />
+              <div className="card-enterprise" style={{ padding: '1.25rem 1.5rem' }}>
+                <div style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--brand-blue)', marginBottom: '4px' }}>
+                  CHALLENGE 02
+                </div>
+                <div style={{ fontSize: '1.05rem', fontWeight: 700, color: '#ffffff', marginBottom: '4px' }}>
+                  Unplanned Industrial Downtime &amp; High Penalties
+                </div>
+                <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)' }}>
+                  Periodic inspections fail to capture micro-vibrations and thermal stress that precede catastrophic machinery and flight engine failure.
+                </p>
+              </div>
 
-        {/* ==================== 4. CLIENTS SECTION ==================== */}
-        <ClientsSection
-          currentClient={currentClient}
-          nextClient={nextClient}
-          clientShowcases={clientShowcases}
-          activeClientIndex={activeClientIndex}
-          setActiveClientIndex={setActiveClientIndex}
-          nextClientIndex={nextClientIndex}
-        />
+              <div className="card-enterprise" style={{ padding: '1.25rem 1.5rem' }}>
+                <div style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--brand-blue)', marginBottom: '4px' }}>
+                  CHALLENGE 03
+                </div>
+                <div style={{ fontSize: '1.05rem', fontWeight: 700, color: '#ffffff', marginBottom: '4px' }}>
+                  24/7 Operations Coverage &amp; Sovereign Defense
+                </div>
+                <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)' }}>
+                  Internal IT teams face alert fatigue and staffing shortages, requiring dedicated sovereign NOC/SOC engineers to achieve sub-15m MTTR.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-        {/* ==================== 5. ABOUT SECTION ==================== */}
-        <AboutSection />
+      {/* 3. CORE CAPABILITIES (BUILD · SECURE · PREDICT · OPERATE) */}
+      <TechShowcaseSection />
 
-        {/* ==================== 6. CONTACT SECTION (COMPACT CTA) ==================== */}
-        <ContactSection />
-      </main>
+      {/* 4. ATHERMIND PLATFORMS (IntelliDAM · Metronik PDM · AeroPulse) */}
+      <ProductsSection />
 
-      {/* Toast Container */}
-      <div className="toast-container" id="toastContainer"></div>
+      {/* 5. VERIFIED BUSINESS IMPACT METRICS */}
+      <ImpactSection />
+
+      {/* 6. ENTERPRISE ENGINEERING SERVICES */}
+      <ServicesSection />
+
+      {/* 7. CLIENT SUCCESS STORIES & CASE STUDIES */}
+      <ClientsSection />
+
+      {/* 8. ABOUT AGUNA SOLUTIONS & ATHERMIND */}
+      <AboutSection />
+
+      {/* 9. FINAL CALL TO ACTION */}
+      <ContactSection />
+
+      <style jsx>{`
+        .hero-proof-bar::-webkit-scrollbar {
+          height: 4px;
+        }
+
+        @media (max-width: 768px) {
+          .hero-live-indicator {
+            position: static !important;
+            margin-top: 1.25rem !important;
+            display: inline-flex !important;
+          }
+        }
+        @media (max-width: 640px) {
+          .hero-cta-group {
+            flex-direction: column !important;
+            width: 100% !important;
+          }
+          .hero-cta-group :global(.btn) {
+            width: 100% !important;
+            text-align: center !important;
+            justify-content: center !important;
+          }
+        }
+        .hero-proof-bar::-webkit-scrollbar-thumb {
+          background: rgba(85, 164, 255, 0.3);
+          border-radius: 4px;
+        }
+      `}</style>
     </>
   );
 }

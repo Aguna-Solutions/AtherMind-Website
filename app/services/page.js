@@ -1,264 +1,160 @@
-'use client';
-
-import { useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
+import ServicesInteractiveGrid from '../../components/sections/ServicesInteractiveGrid';
+
+export const metadata = {
+  title: 'Cybersecurity & VAPT Service Portfolio | Aguna Solutions | AtherMind',
+  description:
+    'Cybersecurity & VAPT Service Portfolio by Aguna Solutions — Managed 24/7 NOC/SOC Operations, Offensive Security, and Cloud Native DevSecOps.',
+};
 
 export default function ServicesPage() {
-  useEffect(() => {
-    if (typeof window !== 'undefined' && window.initAthermind) {
-      window.initAthermind();
-    }
-  }, []);
+  const servicesList = [
+    {
+      id: 'soc',
+      title: '24/7 Managed NOC & SOC Operations',
+      tag: 'HUMAN-IN-THE-LOOP DEFENSE',
+      badge: '< 15m MTTR',
+      desc: 'Sovereign 24/7/365 NOC & SOC centers delivering active threat triage, continuous SIEM/SOAR hunting, and guaranteed sub-15m MTTR.',
+      highlights: [
+        'Sub-15 Minute Incident Mean Time to Resolution (MTTR)',
+        'Splunk, Microsoft Sentinel & QRadar SIEM/SOAR Ingestion',
+        '24/7/365 Continuous Threat Hunting & Sovereign Escalation',
+        'Hybrid Multi-Cloud Backbone & SD-WAN Network Management',
+      ],
+      img: '/assets/soc1.webp',
+      agunaLink: 'https://agunasolutions.com/services',
+    },
+    {
+      id: 'vapt',
+      title: 'VAPT & Offensive Security Auditing',
+      tag: 'OWASP & PTES CERTIFIED',
+      badge: 'Zero False Positives',
+      desc: 'Accredited offensive specialists delivering red-team adversary simulations, kernel eBPF vulnerability audits, and ISO/SOC 2 compliance.',
+      highlights: [
+        'Web, Mobile, API & Internal Network Penetration Testing',
+        'Kernel eBPF & Containerized Runtime Security Inspection',
+        'Continuous Cloud Posture & Attack Surface Mapping',
+        'Full Regulatory Compliance Audits (ISO 27001, SOC 2, HIPAA)',
+      ],
+      img: '/assets/VAPT.jpg',
+      agunaLink: 'https://agunasolutions.com/services',
+    },
+    {
+      id: 'cloud',
+      title: 'Cloud Native DevSecOps & Architecture',
+      tag: 'KUBERNETES & MULTI-CLOUD',
+      badge: '99.999% SLA',
+      desc: 'High-throughput Kubernetes engineering, automated GitOps CI/CD pipelines, and zero-trust multi-cloud architectures.',
+      highlights: [
+        'Multi-Cloud Orchestration (AWS, Microsoft Azure, Google Cloud)',
+        'Automated GitOps Pipelines & Immutable Infrastructure as Code',
+        'Microservices Service Mesh & Mutual TLS (mTLS) Encryption',
+        'Sub-100ms API Gateway & Distributed Edge Caching',
+      ],
+      img: '/assets/cloud.webp',
+      agunaLink: 'https://agunasolutions.com/services',
+    },
+    {
+      id: 'ai',
+      title: 'Enterprise AI & Intelligent Automation',
+      tag: 'NEURAL MODELS & ROBOTICS',
+      badge: 'Private LLM AI',
+      desc: 'Private enterprise LLMs, time-series predictive telemetry ensembles, and intelligent process robotics that remove operational bottlenecks.',
+      highlights: [
+        'Private Enterprise LLMs & Retrieval-Augmented Generation (RAG)',
+        'Time-Series Predictive Maintenance Machine Learning Ensembles',
+        'Intelligent Robotic Process Automation (RPA) for Legacy Systems',
+        'Automated Alert Correlation & Anomaly Filtering',
+      ],
+      img: '/assets/NOC.jpg',
+      agunaLink: 'https://agunasolutions.com/services',
+    },
+  ];
 
   return (
-    <>
-      {/* Custom cursor */}
-      <div className="cursor" id="cursor" aria-hidden="true">
-        <div className="cursor-dot"></div>
-        <div className="cursor-ring"></div>
-      </div>
+    <div style={{ paddingTop: 'clamp(1.5rem, 3vw, 2.5rem)', paddingBottom: '5rem' }}>
+      {/* Services Hero Header */}
+      <section className="section-spacing" style={{ paddingTop: '1rem', paddingBottom: '3rem' }}>
+        <div className="container" style={{ maxWidth: '960px', margin: '0 auto', textAlign: 'center' }}>
+          <span className="badge-pill badge-pill-blue" style={{ marginBottom: '1.25rem', display: 'inline-flex' }}>
+            <span className="badge-pulse-dot"></span>
+            Engineering Services &amp; 24/7 Operations
+          </span>
 
-      {/* WebGL canvas (background) */}
-      <canvas id="bg-canvas" className="bg-canvas" aria-hidden="true"></canvas>
-      <div className="bg-ambient-spotlights" aria-hidden="true">
-        <div className="bg-spotlight-top"></div>
-        <div className="bg-spotlight-mid"></div>
-        <div className="bg-spotlight-bottom"></div>
-      </div>
-      <div className="grid-overlay" aria-hidden="true"></div>
-      <div className="noise-overlay" aria-hidden="true"></div>
+          <h1 className="text-h1" style={{ marginBottom: '1.5rem', lineHeight: '1.16', letterSpacing: '-0.025em' }}>
+            Enterprise Engineering Services Powered by <br />
+            <span className="text-blue-gradient">World-Class Engineers &amp; Analysts</span>
+          </h1>
 
-      <main id="top">
-        {/* SERVICES HERO */}
-        <section className="hero hero-subpage">
-          <div className="hero-grid">
-            <div className="hero-visual">
-              <div className="hero-shield-card">
-                <div className="shield-glow-backdrop" style={{ background: 'radial-gradient(circle, rgba(16, 185, 129, 0.35) 0%, rgba(6, 182, 212, 0.22) 45%, transparent 70%)' }}></div>
-                <div className="shield-svg-wrapper">
-                  <svg className="shield-svg" viewBox="0 0 340 360" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                      <linearGradient id="srvRadarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#10B981" stopOpacity="0.9" />
-                        <stop offset="50%" stopColor="#06B6D4" stopOpacity="0.7" />
-                        <stop offset="100%" stopColor="#3B82F6" stopOpacity="0.9" />
-                      </linearGradient>
-                      <linearGradient id="srvSweepGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#10B981" stopOpacity="0.5" />
-                        <stop offset="100%" stopColor="#10B981" stopOpacity="0" />
-                      </linearGradient>
-                      <filter id="srvGlowFilter" x="-30%" y="-30%" width="160%" height="160%">
-                        <feGaussianBlur stdDeviation="6" result="blur" />
-                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                      </filter>
-                    </defs>
+          <p
+            className="text-lead"
+            style={{
+              marginBottom: '2.25rem',
+              color: 'var(--text-secondary)',
+              lineHeight: '1.7',
+              maxWidth: '820px',
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              fontSize: 'clamp(1.02rem, 1.4vw, 1.16rem)',
+            }}
+          >
+            Aguna Solutions delivers mission-critical technology operations, active cyber defense, high-scale cloud platforms, and verified compliance for organizations where failure is not an option.
+          </p>
 
-                    <circle cx="170" cy="180" r="140" stroke="rgba(16, 185, 129, 0.2)" strokeWidth="1.5" strokeDasharray="6 4" />
-                    <circle cx="170" cy="180" r="105" stroke="rgba(6, 182, 212, 0.25)" strokeWidth="1.5" />
-                    <circle cx="170" cy="180" r="70" stroke="rgba(16, 185, 129, 0.35)" strokeWidth="1.5" strokeDasharray="8 4" />
-                    <circle cx="170" cy="180" r="35" stroke="rgba(59, 130, 246, 0.4)" strokeWidth="1.5" />
+          <div style={{ display: 'flex', gap: '14px', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '2.5rem' }}>
+            <a
+              href="https://agunasolutions.com/services"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-primary btn-lg"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
+            >
+              <span>Explore Aguna Solutions Services</span>
+              <span style={{ fontSize: '1.15rem' }}>↗</span>
+            </a>
+            <Link href="/contact" className="btn btn-secondary btn-lg">
+              <span>Schedule SLA Consultation</span>
+            </Link>
+          </div>
 
-                    <line x1="30" y1="180" x2="310" y2="180" stroke="rgba(16, 185, 129, 0.3)" strokeWidth="1" strokeDasharray="4 4" />
-                    <line x1="170" y1="40" x2="170" y2="320" stroke="rgba(16, 185, 129, 0.3)" strokeWidth="1" strokeDasharray="4 4" />
-
-                    <g className="shield-ring ring-outer">
-                      <path d="M170 180 L170 40 A140 140 0 0 1 310 180 Z" fill="url(#srvSweepGrad)" />
-                      <line x1="170" y1="180" x2="310" y2="180" stroke="#10B981" strokeWidth="2.5" filter="url(#srvGlowFilter)" />
-                    </g>
-
-                    <circle cx="170" cy="180" r="10" fill="#10B981" filter="url(#srvGlowFilter)" />
-                    <circle cx="170" cy="180" r="4" fill="#FFFFFF" />
-
-                    <circle className="shield-ring ring-inner" cx="170" cy="180" r="125" stroke="url(#srvRadarGrad)" strokeWidth="2" strokeDasharray="16 8" />
-                  </svg>
-                </div>
-
-                <div className="floating-badge badge-top-right glass-panel" style={{ top: '15px', right: '-15px' }}>
-                  <div className="badge-icon green">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5">
-                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                    </svg>
-                  </div>
-                  <div className="badge-info">
-                    <span className="badge-title">24/7 Managed SOC</span>
-                    <span className="badge-status">Active Threat Defense</span>
-                  </div>
-                </div>
-
-                <div className="floating-badge badge-bottom-left glass-panel" style={{ bottom: '20px', left: '-15px' }}>
-                  <div className="badge-icon cyan">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5">
-                      <circle cx="12" cy="12" r="10" />
-                      <polyline points="12 6 12 12 16 14" />
-                    </svg>
-                  </div>
-                  <div className="badge-info">
-                    <span className="badge-title">24/7 NOC Monitoring</span>
-                    <span className="badge-status">99.99% Uptime Commitment</span>
-                  </div>
-                </div>
-              </div>
+          {/* Fast Trust Indicators */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '24px',
+              flexWrap: 'wrap',
+              paddingTop: '1.5rem',
+              borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+              marginBottom: '3.5rem',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.82rem', color: 'var(--text-muted)' }}>
+              <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: 'var(--brand-blue)' }} />
+              <span>24/7 Managed NOC &amp; SOC</span>
             </div>
-
-            <div className="hero-content">
-              <div className="hero-meta">
-                <span className="hero-status">
-                  <span className="hero-pulse"></span>
-                  <span>OFFICIAL SERVICE OFFERINGS</span>
-                </span>
-              </div>
-
-              <h1 className="hero-title">
-                <span className="hero-line"><span className="hero-word" data-cursor="lg">Enterprise Technology &</span></span>
-                <span className="hero-line">
-                  <span className="hero-word gradient-text">24/7 Managed Operations</span>
-                </span>
-              </h1>
-
-              <p className="hero-sub">
-                Aguna Solutions delivers 24/7 Managed SOC & NOC operations, cloud DevSecOps engineering, high-throughput software development, and enterprise AI automation.
-              </p>
-
-              <div style={{ marginTop: '24px' }}>
-                <a href="https://www.agunasolutions.com/services" target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-lg">
-                  <span>View Services on Aguna Solutions ↗</span>
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M5 12h14M13 5l7 7-7 7" />
-                  </svg>
-                </a>
-              </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.82rem', color: 'var(--text-muted)' }}>
+              <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: 'var(--brand-blue)' }} />
+              <span>Sub-15m MTTR SLA</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.82rem', color: 'var(--text-muted)' }}>
+              <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: 'var(--brand-blue)' }} />
+              <span>OWASP &amp; PTES Certified VAPT</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.82rem', color: 'var(--text-muted)' }}>
+              <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: 'var(--brand-blue)' }} />
+              <span>Zero Telemetry Leakage</span>
             </div>
           </div>
-        </section>
+        </div>
 
-        {/* SERVICES SECTION */}
-        <section className="capabilities" style={{ paddingTop: '20px' }}>
-          <div className="container">
-            <div className="service-buttons-grid">
-              <a href="https://www.agunasolutions.com/services" target="_blank" rel="noopener noreferrer" className="service-redirect-btn glass-panel theme-emerald">
-                <div className="srv-card-head">
-                  <div className="srv-icon-box">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                    </svg>
-                  </div>
-                  <span className="srv-tag">24/7 MANAGED SOC</span>
-                </div>
-                <div className="srv-card-main">
-                  <h3 className="srv-title">Managed SOC & Cyber Security</h3>
-                  <p className="srv-short-desc">Proactive 24/7 threat hunting, SIEM log monitoring, and automated incident response.</p>
-                </div>
-                <div className="srv-card-foot">
-                  <span className="srv-action-label">Explore Specification</span>
-                  <div className="srv-arrow-box"><span className="srv-arrow">↗</span></div>
-                </div>
-              </a>
-
-              <a href="https://www.agunasolutions.com/services" target="_blank" rel="noopener noreferrer" className="service-redirect-btn glass-panel theme-blue">
-                <div className="srv-card-head">
-                  <div className="srv-icon-box">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
-                      <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
-                      <line x1="8" y1="21" x2="16" y2="21" />
-                      <line x1="12" y1="17" x2="12" y2="21" />
-                    </svg>
-                  </div>
-                  <span className="srv-tag">99.999% NOC SLA</span>
-                </div>
-                <div className="srv-card-main">
-                  <h3 className="srv-title">Managed NOC Operations</h3>
-                  <p className="srv-short-desc">Zero-downtime infrastructure monitoring, multi-cloud networking, and round-the-clock ops.</p>
-                </div>
-                <div className="srv-card-foot">
-                  <span className="srv-action-label">Explore Specification</span>
-                  <div className="srv-arrow-box"><span className="srv-arrow">↗</span></div>
-                </div>
-              </a>
-
-              <a href="https://www.agunasolutions.com/services" target="_blank" rel="noopener noreferrer" className="service-redirect-btn glass-panel theme-purple">
-                <div className="srv-card-head">
-                  <div className="srv-icon-box">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
-                      <polyline points="16 18 22 12 16 6" />
-                      <polyline points="8 6 2 12 8 18" />
-                    </svg>
-                  </div>
-                  <span className="srv-tag">HIGH-THROUGHPUT</span>
-                </div>
-                <div className="srv-card-main">
-                  <h3 className="srv-title">Web & Mobile App Development</h3>
-                  <p className="srv-short-desc">High-performance software architectures engineered for extreme throughput and scale.</p>
-                </div>
-                <div className="srv-card-foot">
-                  <span className="srv-action-label">Explore Specification</span>
-                  <div className="srv-arrow-box"><span className="srv-arrow">↗</span></div>
-                </div>
-              </a>
-
-              <a href="https://www.agunasolutions.com/services" target="_blank" rel="noopener noreferrer" className="service-redirect-btn glass-panel theme-cyan">
-                <div className="srv-card-head">
-                  <div className="srv-icon-box">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" />
-                    </svg>
-                  </div>
-                  <span className="srv-tag">K8S & MULTI-CLOUD</span>
-                </div>
-                <div className="srv-card-main">
-                  <h3 className="srv-title">Cloud Native & DevSecOps</h3>
-                  <p className="srv-short-desc">Kubernetes container orchestration, automated CI/CD, and Zero-Trust security governance.</p>
-                </div>
-                <div className="srv-card-foot">
-                  <span className="srv-action-label">Explore Specification</span>
-                  <div className="srv-arrow-box"><span className="srv-arrow">↗</span></div>
-                </div>
-              </a>
-
-              <a href="https://www.agunasolutions.com/services" target="_blank" rel="noopener noreferrer" className="service-redirect-btn glass-panel theme-indigo">
-                <div className="srv-card-head">
-                  <div className="srv-icon-box">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
-                      <circle cx="11" cy="11" r="8" />
-                      <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                    </svg>
-                  </div>
-                  <span className="srv-tag">OWASP & PTES</span>
-                </div>
-                <div className="srv-card-main">
-                  <h3 className="srv-title">VAPT & Security Audit</h3>
-                  <p className="srv-short-desc">Deep penetration testing, vulnerability scanning, and regulatory compliance auditing.</p>
-                </div>
-                <div className="srv-card-foot">
-                  <span className="srv-action-label">Explore Specification</span>
-                  <div className="srv-arrow-box"><span className="srv-arrow">↗</span></div>
-                </div>
-              </a>
-
-              <a href="https://www.agunasolutions.com/services" target="_blank" rel="noopener noreferrer" className="service-redirect-btn glass-panel theme-teal">
-                <div className="srv-card-head">
-                  <div className="srv-icon-box">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
-                      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-                    </svg>
-                  </div>
-                  <span className="srv-tag">LLM & INTELLIGENT RPA</span>
-                </div>
-                <div className="srv-card-main">
-                  <h3 className="srv-title">Enterprise AI & Automation</h3>
-                  <p className="srv-short-desc">Custom LLM integrations, predictive analytics engines, and automated workflow robotics.</p>
-                </div>
-                <div className="srv-card-foot">
-                  <span className="srv-action-label">Explore Specification</span>
-                  <div className="srv-arrow-box"><span className="srv-arrow">↗</span></div>
-                </div>
-              </a>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      {/* Toast Container */}
-      <div className="toast-container" id="toastContainer"></div>
-    </>
+        {/* Exact 4 Service Cards Grid */}
+        <div className="container">
+          <ServicesInteractiveGrid services={servicesList} />
+        </div>
+      </section>
+    </div>
   );
 }

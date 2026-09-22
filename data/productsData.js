@@ -116,7 +116,7 @@ export const controlPlaneData = {
     col5Items: [
       { icon: '📉', name: '60% Downtime Cut' },
       { icon: '⏱️', name: '14-Day Warning' },
-      { icon: '📈', name: '400% 5-Yr ROI' },
+      { icon: '📈', name: '> 3.5x 5-Yr ROI' },
     ],
   },
   aero: {

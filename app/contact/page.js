@@ -47,7 +47,7 @@ export default function ContactPage() {
         <div className="container">
           <header className="section-head">
             <h1 className="hero-title">
-              <span className="hero-line">Company & Engineering</span>
+              <span className="hero-line">Company & Engineering </span>
               <span className="hero-line"><span className="gradient-text">Contact Details.</span></span>
             </h1>
             <p className="hero-sub">

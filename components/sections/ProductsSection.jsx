@@ -1,190 +1,207 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
+import MotionCard from '../MotionCard';
 
-export default function ProductsSection({ activeTab, setActiveTab, activeData }) {
+export default function ProductsSection() {
+  const [activeProduct, setActiveProduct] = useState('dam');
+
+  const products = {
+    dam: {
+      id: 'dam',
+      name: 'AtherMind IntelliDAM',
+      tag: 'ZERO-TRUST DATABASE DEFENSE',
+      headline: 'Sub-5ms Query Inspection & Real-Time Exfiltration Block',
+      summary:
+        'AtherMind IntelliDAM safeguards enterprise databases by monitoring raw SQL query streams, applying inline attribute-based access controls (ABAC), and isolating data exfiltration attempts in real-time without client code modifications.',
+      highlights: [
+        '100% Traffic & SQL Capture with Sub-50ms Monitoring Overhead',
+        'ABAC & Zero-Trust Enforcement Aligned with NIST SP 800-207',
+        'Native Multi-DB Support: Oracle, PostgreSQL, MySQL, MongoDB, SAP ERP',
+        'Tamper-Proof Merkle Tree Cryptographic Audit Logging',
+      ],
+      mediaType: 'video',
+      src: '/AtherMind_IntelliDAM.mp4',
+      poster: '/assets/AtherMind_IntelliDAM_poster.webp',
+      badge: 'Animated AST Parser',
+      client: 'GNFC Chemical Core',
+      link: '/products#overview',
+    },
+    soc: {
+      id: 'soc',
+      name: '24/7 Sovereign Cyber Shield & SOC',
+      tag: 'CONTINUOUS THREAT INTERCEPT & DEFENSE',
+      headline: 'Sub-15 Min Incident Resolution & 99.999% SLA Uptime',
+      summary:
+        'AtherMind Managed SOC provides real-time automated packet inspection, kernel eBPF threat neutralization, and AI SIEM triage. Deployed for banking networks and telecom backbones with zero alert fatigue.',
+      highlights: [
+        'Autonomous Kernel Threat Intercept & Live Session Isolation',
+        'Sub-15 Minute MTTD/MTTR with Cryptographic Forensic Audit Trails',
+        'ISO 27001, SOC 2 Type II & DPDPA Sovereign Compliance Shield',
+        '24/7 Dedicated Systems Engineering & Red Team Pod Support',
+      ],
+      mediaType: 'video',
+      src: '/assets/cyber_security_freepik.mp4',
+      poster: '/assets/cyber_security_freepik_poster.jpg',
+      badge: 'Live SOC Cyber Feed',
+      client: 'NPST & Orange Telecom',
+      link: '/services',
+    },
+    pdm: {
+      id: 'pdm',
+      name: 'Metronik PDM',
+      tag: 'PREDICTIVE MAINTENANCE DIGITAL TWIN',
+      headline: '14-Day Advance Equipment Failure Forecasting',
+      summary:
+        'Metronik PDM fuses high-frequency SCADA telemetry and drone LiDAR feeds into a living 3D spatial replica. Neural AI ensembles analyze vibration and thermal curves to detect anomalies 14 days before failure.',
+      highlights: [
+        'MQTT, OPC-UA & Modbus Edge Protocol Ingestion at 100K+ samples/sec',
+        'Living 3D Spatial Digital Asset Twin Synchronized at 60 FPS',
+        'LSTM + XGBoost Predictive Degradation Models (95%+ Accuracy)',
+        'Automated Maintenance Work-Order Ticket Dispatch (SAP PM & Maximo)',
+      ],
+      mediaType: 'image',
+      src: '/assets/ather_digital_twin_core.webp',
+      badge: 'Living 3D Replica',
+      client: 'Musashi Precision Auto',
+      link: '/products#capabilities',
+    },
+    aero: {
+      id: 'aero',
+      name: 'AtherMind AeroPulse',
+      tag: 'COMMERCIAL AVIATION TELEMETRY AI',
+      headline: '50% AOG Maintenance Delay Reduction for Fleets',
+      summary:
+        'AeroPulse ingests live ACARS, EHM, and ARINC 664 flight datalinks to create live aircraft engine twins, predicting exhaust gas temperature decay and scheduling proactive line maintenance before delays occur.',
+      highlights: [
+        'Direct ARINC 664 / AFDX SATCOM Flight Datalink Decoding',
+        'Predictive Turbofan Engine Degradation & Rotor Thermal Health',
+        'Continuous EASA & FAA Part-145 Tamper-Proof Audit Trails',
+        'Slashed Commercial Aircraft-on-Ground (AOG) Incidents by >50%',
+      ],
+      mediaType: 'image',
+      src: '/assets/aeropulse_aviation_preview.webp',
+      badge: 'Aerospace Telemetry',
+      client: 'Star Air Regional Fleet',
+      link: '/products#use-cases',
+    },
+  };
+
+  const current = products[activeProduct] || products.dam;
+
   return (
-    <section className="work" id="products" style={{ paddingTop: '64px', paddingBottom: '72px' }}>
+    <section className="section-spacing" id="products" style={{ paddingTop: '1.25rem', paddingBottom: '1.5rem' }}>
       <div className="container">
-        <header className="section-head text-center" style={{ marginBottom: '36px', textAlign: 'center' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '10px', padding: '6px 20px', borderRadius: '30px', background: 'rgba(34, 211, 238, 0.12)', border: '1px solid rgba(34, 211, 238, 0.35)', color: '#22d3ee', fontSize: '0.82rem', fontWeight: 800, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '16px', boxShadow: '0 0 20px rgba(34, 211, 238, 0.25)' }}>
-            <span className="live-pulse-dot" style={{ width: '8px', height: '8px' }}></span>
-            ⚡ ATHERMIND ZERO-TRUST PLATFORM
-          </div>
-          <h2 className="section-title" style={{ fontSize: '2.7rem', fontWeight: 900, marginBottom: '14px', letterSpacing: '-0.025em', lineHeight: 1.2 }}>
-            One Platform to <span className="gradient-text">Secure Every Database & Identity</span>
+        {/* Section Header */}
+        <div className="section-header text-center" style={{ marginBottom: '1.15rem' }}>
+          <span className="badge-pill badge-pill-blue" style={{ marginBottom: '0.4rem' }}>
+            <span className="badge-pulse-dot"></span>
+            AtherMind Platform Suite
+          </span>
+          <h2 className="text-h2" style={{ marginBottom: '0.4rem' }}>
+            Mission-Critical Software for <span className="text-blue-gradient">High-Reliability Enterprises</span>
           </h2>
-          <p className="section-sub" style={{ fontSize: '1.08rem', maxWidth: '760px', margin: '0 auto', lineHeight: 1.6 }}>
-            Unified real-time telemetry, sub-microsecond query inspection, and automated zero-trust governance across hybrid cloud and industrial enterprise environments.
+          <p className="section-subtitle" style={{ fontSize: '0.92rem', maxWidth: '640px', margin: '0 auto', lineHeight: 1.5 }}>
+            Purpose-built platforms designed to protect sovereign database infrastructure, forecast industrial equipment failure, and defend enterprise backbones 24/7.
           </p>
-        </header>
+        </div>
 
-        <div className="control-plane-wrapper">
-          {/* PRODUCT SWITCHER TABS & DIAGRAM BOARD */}
-          <div className="cp-product-tabs" style={{ marginBottom: '24px' }}>
-            <button
-              className={`cp-tab-btn tab-dam ${activeTab === 'dam' ? 'active theme-emerald' : ''}`}
-              onClick={() => setActiveTab('dam')}
-              style={activeTab === 'dam' ? { borderColor: '#10b981', color: '#10b981', background: 'rgba(16, 185, 129, 0.15)', boxShadow: '0 0 20px rgba(16, 185, 129, 0.25)' } : {}}
-            >
-              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-              </svg>
-              <span>AtherMind IntelliDAM (Zero-Trust Security)</span>
-            </button>
-
-            <button
-              className={`cp-tab-btn tab-pdm ${activeTab === 'pdm' ? 'active theme-blue' : ''}`}
-              onClick={() => setActiveTab('pdm')}
-              style={activeTab === 'pdm' ? { borderColor: '#3b82f6', color: '#3b82f6', background: 'rgba(59, 130, 246, 0.15)', boxShadow: '0 0 20px rgba(59, 130, 246, 0.25)' } : {}}
-            >
-              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <rect x="4" y="4" width="16" height="16" rx="2" />
-                <rect x="9" y="9" width="6" height="6" />
-              </svg>
-              <span>Metronik PDM (AI Digital Twin)</span>
-            </button>
-
-            <button
-              className={`cp-tab-btn tab-aero ${activeTab === 'aero' ? 'active theme-purple' : ''}`}
-              onClick={() => setActiveTab('aero')}
-              style={activeTab === 'aero' ? { borderColor: '#a855f7', color: '#a855f7', background: 'rgba(168, 85, 247, 0.15)', boxShadow: '0 0 20px rgba(168, 85, 247, 0.25)' } : {}}
-            >
-              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3.5c-.5-.5-2.5 0-4 1.5L13.5 8.5 5.3 6.7c-.6-.1-1.2.1-1.5.6l-1.1 1.7c-.3.5-.2 1.2.3 1.6L8 15l-3 3-2.5-.5L1 19l3 3 1.5-1.5L5 18l3-3 3.4 5c.4.5 1.1.6 1.6.3l1.7-1.1c.5-.3.7-.9.6-1.5z" />
-              </svg>
-              <span>AtherMind AeroPulse (Aviation AI)</span>
-            </button>
-          </div>
-
-          {/* Main Control Plane Board with Dynamic Color Matching Active Product */}
+        {/* Platform Pill */}
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            marginBottom: '1rem',
+          }}
+        >
           <div
-            className={`control-plane-board glass-panel ${activeData.theme}`}
+            className="btn btn-sm btn-primary"
             style={{
-              borderColor: activeData.accentColor,
-              boxShadow: `0 24px 60px ${activeData.accentColor}25`,
+              padding: '6px 18px',
+              fontSize: '0.84rem',
+              borderRadius: 'var(--radius-full)',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              boxShadow: '0 0 16px rgba(85, 164, 255, 0.3)',
+              cursor: 'default',
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', flexWrap: 'wrap', gap: '10px' }}>
-              <span style={{ fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: activeData.accentColor, background: `${activeData.accentColor}18`, padding: '6px 14px', borderRadius: '20px', border: `1px solid ${activeData.accentColor}44` }}>
-                Active Product: {activeData.name || 'AtherMind IntelliDAM'}
-              </span>
-            </div>
-
-            <p className="cp-subtitle text-left" style={{ fontSize: '0.98rem', lineHeight: '1.6', marginBottom: '20px' }}>
-              {activeData.subtitle}
-            </p>
-
-            {/* Top Flow Loop Arrow */}
-            <div className="cp-flow-loop">
-              <span style={{ color: activeData.accentColor }}>←</span>
-              <div className="cp-loop-line" style={{ background: activeData.accentColor, opacity: 0.4 }}></div>
-              <span className="cp-loop-title" style={{ color: activeData.accentColor, background: `${activeData.accentColor}18`, border: `1px solid ${activeData.accentColor}44` }}>
-                {activeData.topLoop}
-              </span>
-              <div className="cp-loop-line" style={{ background: activeData.accentColor, opacity: 0.4 }}></div>
-              <span style={{ color: activeData.accentColor }}>→</span>
-            </div>
-
-            {/* 5 Columns Architectural Grid */}
-            <div className="cp-columns-grid" style={{ marginTop: '24px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
-              {/* Column 1: Sources */}
-              <div className="cp-column-card glass-panel" style={{ padding: '20px 16px', textAlign: 'center', borderColor: `${activeData.accentColor}35` }}>
-                <h4 style={{ fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.08em', opacity: 0.85, marginBottom: '20px', textAlign: 'center' }}>
-                  {activeData.col1Title}
-                </h4>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'center' }}>
-                  {activeData.col1Items && activeData.col1Items.map((item, idx) => (
-                    <div key={idx} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
-                      <div style={{ width: '42px', height: '42px', borderRadius: '50%', background: `${activeData.accentColor}18`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', border: `1px solid ${activeData.accentColor}44` }}>
-                        {item.icon}
-                      </div>
-                      <span style={{ fontSize: '0.82rem', fontWeight: 600 }}>{item.name}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Column 2: Discover / Ingest */}
-              <div className={`pillar-card glass-panel cp-pillar-card ${activeData.theme}`} style={{ padding: '20px 16px', borderColor: `${activeData.accentColor}44` }}>
-                <div className="cp-radar-icon" style={{ width: '44px', height: '44px', margin: '0 auto 12px', color: activeData.accentColor, background: `${activeData.accentColor}18`, borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: `1px solid ${activeData.accentColor}44` }}>
-                  {activeData.col2Icon}
-                </div>
-                <h3 style={{ fontSize: '1.1rem', textAlign: 'center', marginBottom: '16px', color: activeData.accentColor }}>{activeData.col2Title}</h3>
-                <ul className="cp-bullets-list" style={{ fontSize: '0.84rem', lineHeight: '1.5' }}>
-                  {activeData.col2Points && activeData.col2Points.map((pt, idx) => (
-                    <li key={idx} style={{ marginBottom: '10px' }}>{pt}</li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Column 3: Control / Digitize */}
-              <div className={`pillar-card glass-panel cp-pillar-card ${activeData.theme}`} style={{ padding: '20px 16px', borderColor: `${activeData.accentColor}44` }}>
-                <div className="cp-radar-icon" style={{ width: '44px', height: '44px', margin: '0 auto 12px', color: activeData.accentColor, background: `${activeData.accentColor}18`, borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: `1px solid ${activeData.accentColor}44` }}>
-                  {activeData.col3Icon}
-                </div>
-                <h3 style={{ fontSize: '1.1rem', textAlign: 'center', marginBottom: '16px', color: activeData.accentColor }}>{activeData.col3Title}</h3>
-                <ul className="cp-bullets-list" style={{ fontSize: '0.84rem', lineHeight: '1.5' }}>
-                  {activeData.col3Points && activeData.col3Points.map((pt, idx) => (
-                    <li key={idx} style={{ marginBottom: '10px' }}>{pt}</li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Column 4: Govern / Predict */}
-              <div className={`pillar-card glass-panel cp-pillar-card ${activeData.theme}`} style={{ padding: '20px 16px', borderColor: `${activeData.accentColor}44` }}>
-                <div className="cp-radar-icon" style={{ width: '44px', height: '44px', margin: '0 auto 12px', color: activeData.accentColor, background: `${activeData.accentColor}18`, borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: `1px solid ${activeData.accentColor}44` }}>
-                  {activeData.col4Icon}
-                </div>
-                <h3 style={{ fontSize: '1.1rem', textAlign: 'center', marginBottom: '16px', color: activeData.accentColor }}>{activeData.col4Title}</h3>
-                <ul className="cp-bullets-list" style={{ fontSize: '0.84rem', lineHeight: '1.5' }}>
-                  {activeData.col4Points && activeData.col4Points.map((pt, idx) => (
-                    <li key={idx} style={{ marginBottom: '10px' }}>{pt}</li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Column 5: Targets */}
-              <div className="cp-column-card glass-panel" style={{ padding: '20px 16px', textAlign: 'center', borderColor: `${activeData.accentColor}35` }}>
-                <h4 style={{ fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.08em', opacity: 0.85, marginBottom: '20px', textAlign: 'center' }}>
-                  {activeData.col5Title}
-                </h4>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'center' }}>
-                  {activeData.col5Items && activeData.col5Items.map((item, idx) => (
-                    <div key={idx} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
-                      <div style={{ width: '42px', height: '42px', borderRadius: '50%', background: `${activeData.accentColor}18`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', border: `1px solid ${activeData.accentColor}44` }}>
-                        {item.icon}
-                      </div>
-                      <span style={{ fontSize: '0.82rem', fontWeight: 600 }}>{item.name}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+            <span>🛡️ AtherMind IntelliDAM</span>
           </div>
+        </div>
 
-          {/* Small Know More About Products CTA Button */}
-          <div style={{ textAlign: 'center', marginTop: '28px' }}>
-            <Link
-              href="/products"
-              className="btn btn-outline btn-sm"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '8px 22px',
-                borderRadius: '20px',
-                fontSize: '0.82rem',
-                fontWeight: 700,
-                borderColor: `${activeData.accentColor}66`,
-                color: activeData.accentColor,
-                textDecoration: 'none',
-                transition: 'all 0.3s ease',
-              }}
-            >
-              <span>Know More About Products →</span>
-            </Link>
+        {/* Full-Card Cinematic Media Showcase — Zero Text Inside Card, Enlarged Card Length */}
+        <MotionCard
+          glowColor="transparent"
+          style={{
+            maxWidth: '880px',
+            width: '100%',
+            margin: '0 auto',
+            backgroundColor: '#070d18',
+            border: '1px solid rgba(85, 164, 255, 0.35)',
+            borderRadius: 'var(--radius-lg)',
+            overflow: 'hidden',
+            boxShadow: '0 20px 45px -10px rgba(0, 0, 0, 0.7), 0 0 25px rgba(85, 164, 255, 0.15)',
+            position: 'relative',
+          }}
+        >
+          <div
+            style={{
+              position: 'relative',
+              width: '100%',
+              aspectRatio: '1920 / 897',
+              backgroundColor: '#070d18',
+              overflow: 'hidden',
+            }}
+          >
+            {current.mediaType === 'video' ? (
+              <video
+                key={current.src}
+                autoPlay
+                loop
+                muted
+                playsInline
+                poster={current.poster}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              >
+                <source src={current.src} type="video/mp4" />
+              </video>
+            ) : (
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '-14.05%',
+                  left: 0,
+                  width: '100%',
+                  height: '120.4%',
+                }}
+              >
+                <Image
+                  key={current.src}
+                  src={current.src}
+                  alt={current.name}
+                  fill
+                  style={{ objectFit: 'cover' }}
+                  sizes="(max-width: 992px) 100vw, 880px"
+                  priority
+                  unoptimized
+                />
+              </div>
+            )}
           </div>
+        </MotionCard>
+
+        {/* Bottom CTA Strip */}
+        <div style={{ textAlign: 'center', marginTop: '1.15rem' }}>
+          <span style={{ fontSize: '0.84rem', color: 'var(--text-secondary)', marginRight: '8px' }}>
+            Need a custom architectural deployment or air-gapped installation?
+          </span>
+          <Link href="/contact" style={{ color: 'var(--brand-blue)', fontWeight: 700, fontSize: '0.84rem' }}>
+            Consult our engineering team →
+          </Link>
         </div>
       </div>
     </section>

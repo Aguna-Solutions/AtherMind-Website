@@ -1,599 +1,356 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
-import FuturisticLiveMetrics from '../../components/FuturisticLiveMetrics';
+import AnimatedCounter from '../../components/AnimatedCounter';
+import MotionCard from '../../components/MotionCard';
 
 export default function AboutPage() {
   const [activeArchTab, setActiveArchTab] = useState(0);
 
-  useEffect(() => {
-    const observerCallback = (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-        } else {
-          // Re-trigger scroll transition on scrolling up/down
-          entry.target.classList.remove('is-visible');
-        }
-      });
-    };
+  const stats = [
+    { value: 0.8, prefix: '< ', suffix: ' μs', label: 'Kernel Overhead', sub: 'Sub-microsecond eBPF packet interception' },
+    { value: 100, prefix: '>', suffix: 'K', label: 'Telemetry Ops/Sec', sub: 'Real-time sensor & query ingest throughput' },
+    { value: 99.999, suffix: '%', label: 'Sovereign SLA', sub: 'Guaranteed 24/7 high-availability operations' },
+    { value: 14, suffix: ' Days', label: 'Failure Warning', sub: 'Predictive LSTM early anomaly forecast' },
+  ];
 
-    const observerOptions = {
-      root: null,
-      rootMargin: '0px 0px -60px 0px',
-      threshold: 0.1,
-    };
-
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
-    const elements = document.querySelectorAll('.scroll-reveal');
-    elements.forEach((el) => observer.observe(el));
-
-    return () => {
-      elements.forEach((el) => observer.unobserve(el));
-    };
-  }, []);
+  const pillars = [
+    {
+      step: '01',
+      badge: 'AIR-GAPPED AUTONOMY',
+      title: 'Sovereign Infrastructure Control',
+      desc: 'Engineered from first principles with zero external vendor dependencies. AtherMind operates natively across air-gapped data centers, sovereign private clouds, and ruggedized edge nodes with zero telemetry leakage.',
+      highlights: ['Air-Gapped & Offline Capable', 'Zero External Phone-Home Links', 'Sovereign Cryptographic Keys'],
+    },
+    {
+      step: '02',
+      badge: 'KERNEL-LEVEL SPEED',
+      title: 'Deterministic Sub-Millisecond Speed',
+      desc: 'Bypasses slow user-space proxies through Linux kernel-level eBPF socket inspection. Enforces sub-5ms inline SQL threat blocking and high-volume IIoT packet filtering with undetectable CPU overhead.',
+      highlights: ['Ring-0 Memory-Safe eBPF Probes', '< 0.8 Microsecond Socket Intercept', 'Zero Code Modifications Required'],
+    },
+    {
+      step: '03',
+      badge: 'LIVING 3D REPLICAS',
+      title: 'Physics-Informed Digital Twins',
+      desc: 'Constructs continuous 60fps living 3D digital replicas of critical physical and data assets. Fuses thermal, vibration, and acoustic telemetry with temporal LSTM ensembles to forecast mechanical failures 14 days early.',
+      highlights: ['Real-Time Stress & Thermal Heatmaps', 'ATA & ISO Parameter State Machines', 'Multi-Sensor Sensor Fusion Ensembles'],
+    },
+    {
+      step: '04',
+      badge: '24/7 NOC/SOC PODS',
+      title: 'Human-in-the-Loop SOC/NOC Defense',
+      desc: 'Backed by Aguna Solutions accredited Tier-3 security and network analysts. Combines automated AI threat triage with continuous human validation for sub-15 minute mean time to resolution (MTTR).',
+      highlights: ['Sub-15m Incident Resolution MTTR', 'Splunk, Sentinel & QRadar Ingestion', '24/7/365 Sovereign Escalation'],
+    },
+  ];
 
   const archTabs = [
     {
       id: 'ebpf',
-      badge: 'LAYER 01 — KERNEL INTERCEPT',
-      title: 'eBPF Probing & Sub-Microsecond Telemetry',
-      icon: '⚡',
-      color: '#34d399',
-      borderColor: 'rgba(52, 211, 153, 0.4)',
-      gradient: 'linear-gradient(135deg, rgba(52, 211, 153, 0.15) 0%, rgba(6, 182, 212, 0.05) 100%)',
+      badge: 'LAYER 01 — KERNEL SPACE PROBING',
+      title: 'eBPF Probing & Sub-Microsecond Socket Telemetry',
       summary:
-        'AtherMind operates directly within the Linux kernel space using custom eBPF (Extended Berkeley Packet Filter) probes. This eliminates traditional sidecar overhead and intercepts raw socket traffic before it touches application code.',
+        'AtherMind hooks directly into Linux kernel space via custom eBPF probes. This bypasses user-space proxy latency and intercepts raw socket traffic before it touches application code or database listeners.',
       specs: [
-        { label: 'Latency Impact', val: '< 0.8 microseconds' },
+        { label: 'Latency Overhead', val: '< 0.8 microseconds' },
         { label: 'Memory Footprint', val: '14 MB static' },
-        { label: 'Coverage', val: 'Kernel socket & FS I/O' },
-        { label: 'Isolation', val: 'Ring 0 Memory Safe' },
+        { label: 'Kernel Scope', val: 'Socket & FS I/O' },
+        { label: 'Isolation Model', val: 'Ring-0 Memory Safe' },
       ],
-      codeSnippet: `// AtherMind eBPF Kernel Probe Definition
-SEC("kprobe/sys_enter_write")
-int bpf_trace_socket_io(struct pt_regs *ctx) {
-    u64 pid_tgid = bpf_get_current_pid_tgid();
-    u32 pid = pid_tgid >> 32;
-    return ather_inspect_packet_ringbuffer(ctx, pid);
-}`,
+      features: ['Inline AST Query Parsing', 'Zero-Trust Attribute Access Control', 'Sub-5ms Policy Enforcement', 'Immutable Audit Logs'],
     },
     {
       id: 'neural',
-      badge: 'LAYER 02 — NEURAL ENGINE',
-      title: 'Multi-Modal Graph Neural Networks',
-      icon: '🧠',
-      color: '#22d3ee',
-      borderColor: 'rgba(34, 211, 238, 0.4)',
-      gradient: 'linear-gradient(135deg, rgba(34, 211, 238, 0.15) 0%, rgba(139, 92, 246, 0.05) 100%)',
+      badge: 'LAYER 02 — NEURAL COGNITIVE ENGINE',
+      title: 'Multi-Modal Graph Neural Networks & LSTM Ensembles',
       summary:
-        'Combines temporal LSTMs with Graph Convolutional Networks (GCN) to map high-dimensional relationships across millions of concurrent database queries and IIoT sensor telemetry feeds.',
+        'Combines temporal LSTMs with Graph Convolutional Networks (GCN) to model high-dimensional anomaly topologies across millions of concurrent database queries and industrial sensor streams.',
       specs: [
-        { label: 'Inference Throughput', val: '250,000 ops/sec' },
+        { label: 'Inference Speed', val: '250,000 ops/sec' },
         { label: 'False Positive Rate', val: '< 0.001%' },
-        { label: 'Training Paradigm', val: 'Unsupervised + Reinforcement' },
-        { label: 'Model Footprint', val: 'Quantized INT8 TensorRT' },
+        { label: 'Learning Mode', val: 'Hybrid LSTM + XGBoost' },
+        { label: 'Model Format', val: 'INT8 TensorRT Quantized' },
       ],
-      codeSnippet: `// Graph Neural Ensemble Vector Evaluator
-def evaluate_telemetry_vector(graph_nodes, edge_tensors):
-    embeddings = gcn_layer_forward(graph_nodes, edge_tensors)
-    anomaly_score = lstm_temporal_decay(embeddings)
-    return ather_consensus_gate(anomaly_score)`,
+      features: ['14-Day Early Mechanical Warning', 'Dynamic Acoustic Anomaly Scoring', 'Thermal Heatmap Extrapolation', 'Zero False Positive Baseline'],
     },
     {
       id: 'remediation',
       badge: 'LAYER 03 — AUTONOMOUS FABRIC',
-      title: 'Self-Healing Isolation & Rollback',
-      icon: '🛡️',
-      color: '#a78bfa',
-      borderColor: 'rgba(167, 139, 250, 0.4)',
-      gradient: 'linear-gradient(135deg, rgba(167, 139, 250, 0.15) 0%, rgba(236, 72, 153, 0.05) 100%)',
+      title: 'Self-Healing Isolation & Automated Work Order Staging',
       summary:
-        'When malicious SQL injection or anomalous industrial SCADA commands are detected, AtherMind autonomously terminates targeted sessions, isolates compromised containers, and restores database states in under 12 milliseconds.',
+        'When malicious SQL exfiltration or anomalous SCADA sensor drifts are detected, AtherMind autonomously terminates targeted sessions, isolates compromised nodes, and triggers SAP PM or Maximo work orders in under 12 milliseconds.',
       specs: [
-        { label: 'Response Time', val: '< 12 ms end-to-end' },
-        { label: 'Action Type', val: 'Non-blocking session drop' },
-        { label: 'Audit Trail', val: 'Cryptographic Merkle Proof' },
-        { label: 'Integration', val: 'SAP, IBM Maximo, ServiceNow' },
+        { label: 'Remediation SLA', val: '< 12 ms end-to-end' },
+        { label: 'Execution Mode', val: 'Autonomous session drop' },
+        { label: 'Integrity Proof', val: 'Cryptographic Merkle Proof' },
+        { label: 'ERP Connectors', val: 'SAP PM, Maximo, AMOS' },
       ],
-      codeSnippet: `// Autonomous Remediation Action Dispatcher
-match incident.threat_level {
-    ThreatLevel::Critical => {
-        kernel_socket_kill(incident.target_pid);
-        trigger_merkle_checkpoint_rollback(incident.db_id);
-    }
-    ThreatLevel::Warning => throttle_bandwidth(incident.target_pid),
-}`,
+      features: ['Sub-12ms Session Termination', 'Automated CMMS Work Orders', 'Parts Pre-Staging for Aviation', 'Cryptographic Custody Ledgers'],
     },
     {
       id: 'quantum',
       badge: 'LAYER 04 — QUANTUM MESH',
       title: 'Post-Quantum Sovereign Security Mesh',
-      icon: '⚛️',
-      color: '#f472b6',
-      borderColor: 'rgba(244, 114, 182, 0.4)',
-      gradient: 'linear-gradient(135deg, rgba(244, 114, 182, 0.15) 0%, rgba(52, 211, 153, 0.05) 100%)',
       summary:
-        'All telemetry datalinks and cross-region digital twin synchronization pipelines rely on NIST-standardized CRYSTALS-Kyber-1024 quantum-resistant key encapsulation for unbreakable long-term data security.',
+        'All telemetry datalinks and cross-region digital twin synchronization tunnels rely on NIST-standardized CRYSTALS-Kyber-1024 quantum-resistant key encapsulation for unbreakable long-term data security.',
       specs: [
-        { label: 'Key Encapsulation', val: 'Kyber-1024 (NIST Round 4)' },
-        { label: 'Digital Signatures', val: 'Dilithium-5' },
-        { label: 'Handshake Time', val: '1.2 ms per node' },
-        { label: 'Sovereignty', val: 'Air-Gapped Ready' },
+        { label: 'Key Encapsulation', val: 'Kyber-1024 (NIST FIPS 203)' },
+        { label: 'Digital Signatures', val: 'Dilithium-5 (FIPS 204)' },
+        { label: 'Handshake Latency', val: '1.2 ms per node' },
+        { label: 'Deployment State', val: 'Air-Gapped Sovereign' },
       ],
-      codeSnippet: `// Post-Quantum Handshake Engine
-let (pk, sk) = kyber1024::keypair();
-let (ciphertext, shared_secret) = kyber1024::encapsulate(&pk);
-let decrypted_secret = kyber1024::decapsulate(&ciphertext, &sk);
-assert_eq!(shared_secret, decrypted_secret);`,
+      features: ['Quantum-Safe Ephemeral Tunnels', 'Hardware Security Module (HSM)', 'Zero Key Exfiltration Risk', 'Cross-Region Datalink Encryption'],
+    },
+  ];
+
+  const standards = [
+    {
+      tag: 'DATA PROTECTION',
+      title: 'DPDPA 2023 & GDPR',
+      desc: 'Dynamic AES-256 PII masking, tokenization, and 1-click statutory audit trail exports.',
+      badge: 'Statutory Export',
+    },
+    {
+      tag: 'SECURITY MANAGEMENT',
+      title: 'ISO 27001:2022',
+      desc: 'Certified enterprise security architecture with end-to-end access governance.',
+      badge: 'Certified Control',
+    },
+    {
+      tag: 'AUDIT ASSURANCE',
+      title: 'SOC 2 Type II',
+      desc: 'Independently audited operational security, availability, and processing integrity.',
+      badge: 'Independently Audited',
+    },
+    {
+      tag: 'HEALTHCARE COMPLIANCE',
+      title: 'HIPAA Security Rule',
+      desc: 'Electronic Protected Health Information (ePHI) redaction and access monitoring.',
+      badge: 'ePHI Shielded',
+    },
+    {
+      tag: 'FUTURE-PROOF CIPHER',
+      title: 'NIST Post-Quantum FIPS',
+      desc: 'Pre-integrated CRYSTALS-Kyber-1024 and Dilithium-5 quantum-resistant algorithms.',
+      badge: 'NIST Standards',
+    },
+    {
+      tag: 'AVIATION RELIABILITY',
+      title: 'EASA & FAA Part-145',
+      desc: 'Continuous airworthiness logging and automated turbofan component inspection.',
+      badge: 'Aviation Airworthy',
     },
   ];
 
   const timelineEvents = [
     {
       year: '2022',
-      title: 'Zero-Latency Intercept Core',
-      desc: 'Engineered sub-5ms inline SQL database intercept engines to solve compliance bottlenecks for high-throughput banking and government sector databases.',
-      tag: 'FOUNDATIONAL R&D',
+      badge: 'R&D GENESIS',
+      title: 'Foundational Kernel Intercept R&D',
+      desc: 'Engineered sub-microsecond eBPF inline SQL database interception to eliminate compliance bottlenecks for high-throughput banking and government sector databases.',
+    },
+    {
+      year: '2023',
+      badge: 'INTELLIDAM LAUNCH',
+      title: 'Zero-Trust Database Governance',
+      desc: 'Launched AtherMind IntelliDAM, delivering sub-5ms inline query enforcement and privileged DBA threat mitigation across production SAP and Oracle systems.',
     },
     {
       year: '2024',
-      title: 'Living 3D Digital Twin Matrix',
-      desc: 'Launched Metronik PDM, integrating 100K+ SCADA samples/sec with 3D LiDAR models for autonomous industrial equipment failure forecasting.',
-      tag: 'SCADA & IIOT',
+      badge: 'METRONIK 3D TWIN',
+      title: 'Living 3D Spatial Digital Twin',
+      desc: 'Integrated 100K+ SCADA and MQTT sensor streams per second with 3D spatial models to predict robotic manufacturing motor failures 14 days before halt.',
     },
     {
       year: '2025',
-      title: 'AeroPulse Aviation AI Datalinks',
-      desc: 'Expanded into aerospace telemetry, parsing live ACARS, EHM, and turbofan diagnostic logs for commercial aircraft fleets.',
-      tag: 'AEROSPACE AI',
+      badge: 'AEROPULSE AVIATION',
+      title: 'Aerospace Telemetry AI Engine',
+      desc: 'Expanded into commercial aviation datalinks, ingesting live ARINC 664 and ACARS flight data to eliminate aircraft-on-ground maintenance delays.',
     },
     {
       year: '2026',
-      title: 'Cognitive Autonomous Enterprise Architecture',
-      desc: 'Unified security governance, predictive maintenance, and post-quantum encryption into the sovereign AtherMind platform ecosystem.',
-      tag: 'ENTERPRISE HORIZON',
+      badge: 'SOVEREIGN AUTONOMY',
+      title: 'Cognitive Autonomous Enterprise Platform',
+      desc: 'Unified security governance, predictive maintenance, and post-quantum encryption under Aguna Solutions into an uncompromising sovereign stack.',
     },
   ];
 
   const currentTab = archTabs[activeArchTab];
 
   return (
-    <div style={{ paddingTop: '100px', paddingBottom: '80px' }}>
-      {/* HERO SECTION (2-COLUMN GRID: ANIMATED VISUAL ON LEFT, HEADING ON RIGHT) */}
-      <section className="hero hero-subpage scroll-reveal">
-        <div className="container">
-          <div
-            className="hero-grid"
+    <div style={{ paddingTop: 'clamp(2rem, 4vw, 3.5rem)', paddingBottom: '5rem' }}>
+      {/* 1. HERO SECTION (NO PERSON IMAGES — CYBER TELEMETRY VISUAL STAGE) */}
+      {/* 1. HERO SECTION (CENTERED & PROMINENT HEADING) */}
+      <section className="section-spacing" style={{ paddingTop: '1.75rem', paddingBottom: '3rem' }}>
+        <div className="container" style={{ maxWidth: '960px', margin: '0 auto', textAlign: 'center' }}>
+          <span className="badge-pill badge-pill-blue" style={{ marginBottom: '1.25rem', display: 'inline-flex' }}>
+            <span className="badge-pulse-dot"></span>
+            Sovereign AI &amp; Zero-Trust Engineering
+          </span>
+
+          <h1 className="text-h1" style={{ marginBottom: '1.5rem', lineHeight: '1.16', letterSpacing: '-0.025em' }}>
+            Engineering Sovereign AI &amp; <br />
+            <span className="text-blue-gradient">Zero-Trust Resilience</span>
+          </h1>
+
+          <p
+            className="text-lead"
             style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-              gap: '48px',
-              alignItems: 'center',
+              marginBottom: '2.25rem',
+              color: 'var(--text-secondary)',
+              lineHeight: '1.7',
+              maxWidth: '820px',
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              fontSize: 'clamp(1.05rem, 1.6vw, 1.22rem)',
             }}
           >
-            {/* LEFT SIDE: ANIMATED CYBER SHIELD ENGINE VISUAL */}
-            <div className="hero-visual scroll-reveal">
-              <div className="hero-shield-card" id="aboutHeroCard" style={{ margin: '0 auto', maxWidth: '420px' }}>
-                <div
-                  className="shield-glow-backdrop"
-                  style={{
-                    background:
-                      'radial-gradient(circle, rgba(6, 182, 212, 0.35) 0%, rgba(16, 185, 129, 0.2) 50%, transparent 70%)',
-                  }}
-                ></div>
-                <div className="shield-svg-wrapper">
-                  <svg className="shield-svg" viewBox="0 0 340 360" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                      <linearGradient id="cyberShieldMetal" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#E2E8F0" stopOpacity="0.9" />
-                        <stop offset="35%" stopColor="#22D3EE" stopOpacity="0.85" />
-                        <stop offset="70%" stopColor="#10B981" stopOpacity="0.75" />
-                        <stop offset="100%" stopColor="#071A3D" stopOpacity="0.95" />
-                      </linearGradient>
+            AtherMind is the enterprise platform suite engineered by Aguna Solutions. From Linux kernel-space eBPF packet interception to multi-modal neural digital twins, we protect sovereign databases, forecast machinery downtime, and orchestrate round-the-clock defense for mission-critical infrastructure.
+          </p>
 
-                      <linearGradient id="cyberShieldCore" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stopColor="#0A192F" stopOpacity="0.95" />
-                        <stop offset="50%" stopColor="#071A3D" stopOpacity="0.9" />
-                        <stop offset="100%" stopColor="#030C1B" stopOpacity="0.98" />
-                      </linearGradient>
-
-                      <linearGradient id="cyberNeonGlow" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#67E8F9" stopOpacity="1" />
-                        <stop offset="50%" stopColor="#22D3EE" stopOpacity="0.9" />
-                        <stop offset="100%" stopColor="#34D399" stopOpacity="1" />
-                      </linearGradient>
-
-                      <filter id="cyberShieldDropShadow" x="-20%" y="-20%" width="140%" height="140%">
-                        <feGaussianBlur stdDeviation="8" result="blur" />
-                        <feComponentTransfer>
-                          <feFuncA type="linear" slope="0.8" />
-                        </feComponentTransfer>
-                        <feMerge>
-                          <feMergeNode />
-                          <feMergeNode in="SourceGraphic" />
-                        </feMerge>
-                      </filter>
-
-                      <pattern id="cyberGridPattern" width="16" height="16" patternUnits="userSpaceOnUse">
-                        <path d="M 16 0 L 0 0 0 16" fill="none" stroke="rgba(34, 211, 238, 0.15)" strokeWidth="1" />
-                      </pattern>
-                    </defs>
-
-                    <circle
-                      className="shield-ring ring-outer"
-                      cx="170"
-                      cy="175"
-                      r="150"
-                      stroke="rgba(34, 211, 238, 0.35)"
-                      strokeWidth="1.5"
-                      strokeDasharray="10 8"
-                    />
-                    <circle
-                      className="shield-ring ring-inner"
-                      cx="170"
-                      cy="175"
-                      r="128"
-                      stroke="rgba(52, 211, 153, 0.45)"
-                      strokeWidth="1.5"
-                      strokeDasharray="6 6"
-                    />
-                    <circle
-                      cx="170"
-                      cy="175"
-                      r="105"
-                      stroke="rgba(167, 139, 250, 0.3)"
-                      strokeWidth="1"
-                      strokeDasharray="4 4"
-                    />
-
-                    <path
-                      d="M170 35 L265 80 V195 C265 268 170 315 170 315 C170 315 75 268 75 195 V80 L170 35 Z"
-                      fill="url(#cyberShieldMetal)"
-                      stroke="rgba(103, 232, 249, 0.8)"
-                      strokeWidth="2.5"
-                      filter="url(#cyberShieldDropShadow)"
-                    />
-
-                    <path
-                      d="M170 52 L250 90 V188 C250 252 170 294 170 294 C170 294 90 252 90 188 V90 L170 52 Z"
-                      fill="url(#cyberShieldCore)"
-                      stroke="rgba(34, 211, 238, 0.5)"
-                      strokeWidth="1.75"
-                    />
-                    <path
-                      d="M170 52 L250 90 V188 C250 252 170 294 170 294 C170 294 90 252 90 188 V90 L170 52 Z"
-                      fill="url(#cyberGridPattern)"
-                    />
-
-                    <path
-                      d="M170 95 L215 125 V170 L170 240 L125 170 V125 L170 95 Z"
-                      fill="rgba(6, 182, 212, 0.18)"
-                      stroke="url(#cyberNeonGlow)"
-                      strokeWidth="2"
-                    />
-
-                    <polygon
-                      points="170 120 195 140 170 215 145 140"
-                      fill="url(#cyberNeonGlow)"
-                      opacity="0.85"
-                      filter="url(#cyberShieldDropShadow)"
-                    />
-
-                    <g className="prod-core-cube">
-                      <circle cx="170" cy="35" r="5" fill="#67E8F9" />
-                      <circle cx="265" cy="80" r="5" fill="#34D399" />
-                      <circle cx="75" cy="80" r="5" fill="#A78BFA" />
-                      <circle cx="170" cy="315" r="5" fill="#67E8F9" />
-                    </g>
-
-                    <line
-                      x1="80"
-                      y1="175"
-                      x2="260"
-                      y2="175"
-                      stroke="#22D3EE"
-                      strokeWidth="1.75"
-                      strokeDasharray="8 4"
-                      opacity="0.7"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </div>
-
-            {/* RIGHT SIDE: HERO CONTENT & HEADING */}
-            <div className="hero-content scroll-reveal" style={{ textAlign: 'left' }}>
-              <div
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  padding: '4px 14px',
-                  borderRadius: '20px',
-                  background: 'rgba(6, 182, 212, 0.15)',
-                  border: '1px solid rgba(6, 182, 212, 0.35)',
-                  color: '#22d3ee',
-                  fontSize: '0.82rem',
-                  fontWeight: 800,
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.08em',
-                  marginBottom: '16px',
-                }}
-              >
-                <span>⚡</span> ABOUT ATHERMIND PLATFORM
-              </div>
-              <h1 className="hero-title">
-                <span className="hero-line">Enterprise AI & Living 3D Digital Twins</span>
-                <span className="hero-line"><span className="gradient-text">Zero-Trust Governance & Security</span></span>
-              </h1>
-              <p className="hero-sub" style={{ fontSize: '1.05rem', lineHeight: '1.6', color: 'rgba(255,255,255,0.85)', marginBottom: '24px' }}>
-                AtherMind is the flagship enterprise platform suite developed by Aguna Solutions. Engineered for mission-critical IT, cloud, and industrial edge environments, AtherMind unifies Zero-Trust Database Security, Predictive Maintenance, and Aviation Telemetry AI.
-              </p>
-              <div className="hero-actions" style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
-                <Link href="/products" className="btn btn-primary">
-                  <span>Explore Platform Products →</span>
-                </Link>
-                <a href="https://www.agunasolutions.com/about" target="_blank" rel="noopener noreferrer" className="btn btn-outline">
-                  <span>Aguna Solutions Portal ↗</span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Live Enterprise Impact Calculator */}
-      <section style={{ paddingTop: '20px', paddingBottom: '30px' }}>
-        <div className="container" style={{ maxWidth: '1140px' }}>
-          <FuturisticLiveMetrics />
-        </div>
-      </section>
-
-      {/* NEW STUNNING SECTION 1: INTERACTIVE NEURAL ARCHITECTURE MATRIX */}
-      <section className="section scroll-reveal" style={{ paddingTop: '50px', paddingBottom: '50px' }}>
-        <div className="container" style={{ maxWidth: '1140px' }}>
-          <div className="section-header scroll-reveal" style={{ marginBottom: '36px', textAlign: 'center' }}>
-            <div
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '4px 14px',
-                borderRadius: '20px',
-                background: 'rgba(16, 185, 129, 0.15)',
-                border: '1px solid rgba(16, 185, 129, 0.35)',
-                color: '#34d399',
-                fontSize: '0.8rem',
-                fontWeight: 800,
-                letterSpacing: '0.08em',
-                marginBottom: '12px',
-              }}
-            >
-              <span>🔬</span> DEEP-TECH ENGINEERING FABRIC
-            </div>
-            <h2 style={{ fontSize: '2.1rem', fontWeight: 900 }}>AtherMind Cognitive Architecture</h2>
-            <p style={{ fontSize: '0.98rem', opacity: 0.85, marginTop: '8px', maxWidth: '720px', margin: '8px auto 0' }}>
-              Explore the four zero-overhead execution layers driving real-time intelligence across kernel probes, neural graphs, and post-quantum encryption.
-            </p>
+          <div style={{ display: 'flex', gap: '14px', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '2.5rem' }}>
+            <Link href="/products" className="btn btn-primary btn-lg">
+              <span>Explore Platform Suite</span>
+              <span className="btn-arrow">→</span>
+            </Link>
+            <Link href="/contact" className="btn btn-secondary btn-lg">
+              <span>Schedule Architectural Briefing</span>
+            </Link>
           </div>
 
-          {/* Interactive Arch Tab Navigation */}
+          {/* Fast Trust Indicators */}
           <div
-            className="scroll-reveal"
             style={{
               display: 'flex',
-              gap: '12px',
-              justifyContent: 'center',
-              flexWrap: 'wrap',
-              marginBottom: '32px',
-            }}
-          >
-            {archTabs.map((tab, idx) => {
-              const isActive = activeArchTab === idx;
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveArchTab(idx)}
-                  className={`arch-tab-btn ${isActive ? 'active' : ''}`}
-                  style={{
-                    padding: '12px 24px',
-                    borderRadius: '9999px',
-                    cursor: 'pointer',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '10px',
-                  }}
-                >
-                  <span style={{ fontSize: '1.05rem' }}>{tab.icon}</span>
-                  <span>{tab.badge.split(' — ')[1]}</span>
-                  {isActive && (
-                    <span
-                      className="tab-active-dot"
-                      style={{
-                        width: '8px',
-                        height: '8px',
-                        borderRadius: '50%',
-                        background: tab.color,
-                        boxShadow: `0 0 8px ${tab.color}`,
-                        marginLeft: '4px',
-                      }}
-                    />
-                  )}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Tab Content Display Panel */}
-          <div
-            className="glass-panel arch-panel scroll-reveal"
-            style={{
-              padding: '36px',
-              borderRadius: '24px',
-              background: currentTab.gradient,
-              border: `1px solid ${currentTab.borderColor}`,
-              boxShadow: `0 20px 60px rgba(0, 0, 0, 0.45)`,
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-              gap: '36px',
               alignItems: 'center',
+              justifyContent: 'center',
+              gap: '24px',
+              flexWrap: 'wrap',
+              paddingTop: '1.5rem',
+              borderTop: '1px solid rgba(255, 255, 255, 0.08)',
             }}
           >
-            <div>
-              <div
-                style={{
-                  fontSize: '0.78rem',
-                  fontWeight: 800,
-                  color: currentTab.color,
-                  letterSpacing: '0.1em',
-                  marginBottom: '10px',
-                }}
-              >
-                {currentTab.badge}
-              </div>
-              <h3 className="arch-title" style={{ fontSize: '1.65rem', fontWeight: 900, marginBottom: '14px' }}>
-                {currentTab.title}
-              </h3>
-              <p className="arch-summary" style={{ fontSize: '0.94rem', lineHeight: '1.65', marginBottom: '24px' }}>
-                {currentTab.summary}
-              </p>
-
-              {/* Specs Grid */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
-                {currentTab.specs.map((spec, i) => (
-                  <div
-                    key={i}
-                    className="arch-spec-card"
-                    style={{
-                      padding: '12px 14px',
-                      borderRadius: '12px',
-                    }}
-                  >
-                    <div className="arch-spec-label" style={{ fontSize: '0.74rem', marginBottom: '4px' }}>{spec.label}</div>
-                    <div style={{ fontSize: '0.92rem', fontWeight: 800, color: currentTab.color }}>{spec.val}</div>
-                  </div>
-                ))}
-              </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.82rem', color: 'var(--text-muted)' }}>
+              <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: 'var(--brand-blue)' }} />
+              <span>Air-Gapped Sovereign Core</span>
             </div>
-
-            {/* Code / Logic Terminal Preview */}
-            <div
-              className="arch-code-box"
-              style={{
-                borderRadius: '16px',
-                padding: '24px',
-                border: `1px solid ${currentTab.borderColor}`,
-                fontFamily: 'monospace',
-                fontSize: '0.82rem',
-                boxShadow: 'inset 0 0 20px rgba(0,0,0,0.8)',
-                overflowX: 'auto',
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '10px' }}>
-                <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ef4444' }}></div>
-                <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#f59e0b' }}></div>
-                <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#10b981' }}></div>
-                <span style={{ fontSize: '0.75rem', opacity: 0.6, marginLeft: 'auto' }}>ather_kernel_module.rs</span>
-              </div>
-              <pre style={{ margin: 0, whiteSpace: 'pre-wrap', lineHeight: 1.6, color: currentTab.color }}>
-                {currentTab.codeSnippet}
-              </pre>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.82rem', color: 'var(--text-muted)' }}>
+              <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#22d3ee' }} />
+              <span>Post-Quantum Kyber-1024</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.82rem', color: 'var(--text-muted)' }}>
+              <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#10b981' }} />
+              <span>Sub-5ms SLA Guarantee</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.82rem', color: 'var(--text-muted)' }}>
+              <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#8dc2ff' }} />
+              <span>Zero Telemetry Leakage</span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* NEW STUNNING SECTION 2: ATHERMIND ENGINEERING EVOLUTION TIMELINE */}
-      <section className="section scroll-reveal" style={{ paddingTop: '30px', paddingBottom: '60px' }}>
-        <div className="container" style={{ maxWidth: '1140px' }}>
-          <div className="section-header scroll-reveal" style={{ marginBottom: '44px', textAlign: 'center' }}>
-            <div
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '4px 14px',
-                borderRadius: '20px',
-                background: 'rgba(139, 92, 246, 0.15)',
-                border: '1px solid rgba(139, 92, 246, 0.35)',
-                color: '#a78bfa',
-                fontSize: '0.8rem',
-                fontWeight: 800,
-                letterSpacing: '0.08em',
-                marginBottom: '12px',
-              }}
-            >
-              <span>🚀</span> R&D MILESTONES
-            </div>
-            <h2 style={{ fontSize: '2.1rem', fontWeight: 900 }}>The AtherMind Engineering Journey</h2>
-            <p style={{ fontSize: '0.98rem', opacity: 0.85, marginTop: '8px' }}>
-              From sub-millisecond database security proxies to aviation AI datalinks and cognitive twin models.
+      {/* 2. KEY ARCHITECTURAL METRICS BANNER */}
+      <section className="section-spacing" style={{ paddingTop: '1rem', paddingBottom: '2.5rem' }}>
+        <div className="container" style={{ maxWidth: '1180px' }}>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(4, 1fr)',
+              gap: '1rem',
+              backgroundColor: '#111c30',
+              border: '1px solid rgba(85, 164, 255, 0.22)',
+              borderRadius: 'var(--radius-lg)',
+              padding: 'clamp(1.15rem, 2.2vw, 1.5rem)',
+              boxShadow: 'var(--shadow-md)',
+            }}
+            className="about-metrics-grid"
+          >
+            {stats.map((st, sIdx) => (
+              <div key={sIdx} style={{ borderLeft: '2px solid var(--brand-blue)', paddingLeft: '1rem' }}>
+                <div style={{ fontSize: 'clamp(1.65rem, 2.5vw, 2.2rem)', fontWeight: 800, color: 'var(--brand-blue)', lineHeight: 1 }}>
+                  <AnimatedCounter end={st.value} prefix={st.prefix || ''} suffix={st.suffix} />
+                </div>
+                <div style={{ fontSize: '0.86rem', fontWeight: 700, color: '#ffffff', marginTop: '6px' }}>
+                  {st.label}
+                </div>
+                <p style={{ fontSize: '0.74rem', color: 'var(--text-muted)', marginTop: '3px', lineHeight: '1.35' }}>
+                  {st.sub}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 3. CORE PHILOSOPHY & FOUR ENGINEERING TENETS */}
+      <section className="section-spacing" style={{ backgroundColor: 'var(--bg-subtle)', paddingTop: '3.5rem', paddingBottom: '4rem' }}>
+        <div className="container" style={{ maxWidth: '1180px' }}>
+          <div className="section-header text-center" style={{ marginBottom: '2.75rem' }}>
+            <span className="badge-pill badge-pill-blue">
+              <span className="badge-pulse-dot"></span>
+              Engineering Philosophy
+            </span>
+            <h2 className="text-h2">
+              Four Tenets of <span className="text-blue-gradient">Sovereign Architecture</span>
+            </h2>
+            <p className="section-subtitle" style={{ maxWidth: '720px', margin: '0 auto' }}>
+              Built for aerospace carriers, heavy industry, banking gateways, and government infrastructure where downtime is measured in millions of dollars.
             </p>
           </div>
 
-          <div
-            className="engineering-timeline-grid"
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
-              gap: '20px',
-              position: 'relative',
-            }}
-          >
-            {timelineEvents.map((evt, idx) => (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.25rem' }} className="about-pillars-grid">
+            {pillars.map((item) => (
               <div
-                key={idx}
-                className="principle-card glass-panel timeline-card scroll-reveal"
+                key={item.step}
+                className="card-enterprise"
                 style={{
-                  padding: '28px 24px',
-                  borderRadius: '20px',
-                  position: 'relative',
+                  backgroundColor: '#111c30',
+                  border: '1px solid rgba(85, 164, 255, 0.2)',
+                  borderRadius: 'var(--radius-lg)',
+                  padding: 'clamp(1.5rem, 2.5vw, 2.2rem)',
                   display: 'flex',
                   flexDirection: 'column',
-                  justifyContent: 'space-between',
+                  transition: 'all 0.25s ease',
                 }}
               >
-                <div>
-                  <div
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
+                  <span style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--brand-blue)', letterSpacing: '0.06em' }}>
+                    {item.step}
+                  </span>
+                  <span
                     style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      marginBottom: '16px',
+                      fontSize: '0.68rem',
+                      fontWeight: 800,
+                      color: '#22d3ee',
+                      backgroundColor: 'rgba(34, 211, 238, 0.1)',
+                      border: '1px solid rgba(34, 211, 238, 0.25)',
+                      padding: '3px 9px',
+                      borderRadius: 'var(--radius-full)',
+                      letterSpacing: '0.06em',
                     }}
                   >
-                    <span
-                      style={{
-                        fontSize: '1.8rem',
-                        fontWeight: 900,
-                        color: '#22d3ee',
-                        letterSpacing: '-0.02em',
-                      }}
-                    >
-                      {evt.year}
-                    </span>
-                    <span
-                      style={{
-                        fontSize: '0.72rem',
-                        fontWeight: 800,
-                        padding: '3px 10px',
-                        borderRadius: '12px',
-                        background: 'rgba(34, 211, 238, 0.15)',
-                        color: '#38bdf8',
-                        border: '1px solid rgba(56, 189, 248, 0.3)',
-                      }}
-                    >
-                      {evt.tag}
-                    </span>
-                  </div>
-                  <h3 className="timeline-title" style={{ fontSize: '1.18rem', fontWeight: 800, marginBottom: '10px' }}>
-                    {evt.title}
-                  </h3>
-                  <p className="timeline-desc" style={{ fontSize: '0.86rem', lineHeight: 1.6 }}>
-                    {evt.desc}
-                  </p>
+                    {item.badge}
+                  </span>
+                </div>
+
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#ffffff', marginBottom: '0.75rem' }}>
+                  {item.title}
+                </h3>
+
+                <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '1.25rem', flexGrow: 1 }}>
+                  {item.desc}
+                </p>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', paddingTop: '1rem', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                  {item.highlights.map((hl, hIdx) => (
+                    <div key={hIdx} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.78rem', color: '#cbd5e1' }}>
+                      <span style={{ width: '5px', height: '5px', borderRadius: '50%', backgroundColor: 'var(--brand-blue)' }} />
+                      <span>{hl}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
             ))}
@@ -601,102 +358,312 @@ assert_eq!(shared_secret, decrypted_secret);`,
         </div>
       </section>
 
-      {/* ATHERMIND PRODUCT PLATFORM SUITE */}
-      <section className="process scroll-reveal" style={{ paddingTop: '10px' }}>
-        <div className="container" style={{ maxWidth: '1140px' }}>
-          <div className="section-header scroll-reveal" style={{ marginBottom: '32px', textAlign: 'center' }}>
-            <h2 style={{ fontSize: '1.8rem', fontWeight: 800 }}>Core Platform Engines</h2>
-            <p style={{ fontSize: '0.95rem', opacity: 0.8, marginTop: '6px' }}>
-              Three specialized AI & security control planes driving modern enterprise resilience.
+      {/* 4. INTERACTIVE 4-LAYER ARCHITECTURE CONSOLE */}
+      <section className="section-spacing" style={{ paddingTop: '3.5rem', paddingBottom: '4rem' }}>
+        <div className="container" style={{ maxWidth: '1180px' }}>
+          <div className="section-header text-center" style={{ marginBottom: '2.5rem' }}>
+            <span className="badge-pill badge-pill-blue">Architectural Breakdown</span>
+            <h2 className="text-h2">
+              Deep-Stack <span className="text-blue-gradient">Engineering Specification</span>
+            </h2>
+            <p className="section-subtitle" style={{ maxWidth: '720px', margin: '0 auto' }}>
+              Explore how each layer operates in tandem to deliver verifiable safety, cryptographic auditability, and sub-millisecond execution.
             </p>
           </div>
 
-          <div className="principles-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}>
-            {/* Card 1: IntelliDAM */}
-            <div className="principle-card glass-panel scroll-reveal" style={{ padding: '28px 24px', borderRadius: '20px', border: '1px solid rgba(16, 185, 129, 0.35)' }}>
-              <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: 'rgba(16, 185, 129, 0.2)', border: '1px solid rgba(16, 185, 129, 0.4)', color: '#34d399', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', marginBottom: '16px' }}>
-                🛡️
-              </div>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#34d399', marginBottom: '10px' }}>AtherMind IntelliDAM</h3>
-              <p style={{ fontSize: '0.88rem', lineHeight: '1.65', color: 'rgba(255,255,255,0.82)', marginBottom: '16px' }}>
-                Zero-Trust Database Activity Monitoring & Governance. Inspects every SQL query in sub-5ms, blocks mid-flight injection attacks, and produces tamper-proof audit trails for GDPR, DPDPA, and HIPAA compliance.
-              </p>
-              <Link href="/products" style={{ fontSize: '0.82rem', fontWeight: 700, color: '#34d399', textDecoration: 'none' }}>
-                Explore IntelliDAM Control Plane →
-              </Link>
-            </div>
-
-            {/* Card 2: Metronik PDM */}
-            <div className="principle-card glass-panel scroll-reveal" style={{ padding: '28px 24px', borderRadius: '20px', border: '1px solid rgba(6, 182, 212, 0.35)' }}>
-              <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: 'rgba(6, 182, 212, 0.2)', border: '1px solid rgba(6, 182, 212, 0.4)', color: '#22d3ee', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', marginBottom: '16px' }}>
-                ⚙️
-              </div>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#22d3ee', marginBottom: '10px' }}>Metronik PDM</h3>
-              <p style={{ fontSize: '0.88rem', lineHeight: '1.65', color: 'rgba(255,255,255,0.82)', marginBottom: '16px' }}>
-                AI Digital Twin & IIoT Predictive Maintenance. Ingests 100K+ samples/sec from industrial SCADA and 4K LiDAR drones into a living 3D replica, forecasting equipment failure 14 days prior with 95%+ accuracy.
-              </p>
-              <Link href="/products" style={{ fontSize: '0.82rem', fontWeight: 700, color: '#22d3ee', textDecoration: 'none' }}>
-                Explore Metronik PDM Architecture →
-              </Link>
-            </div>
-
-            {/* Card 3: AeroPulse */}
-            <div className="principle-card glass-panel scroll-reveal" style={{ padding: '28px 24px', borderRadius: '20px', border: '1px solid rgba(139, 92, 246, 0.35)' }}>
-              <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: 'rgba(139, 92, 246, 0.2)', border: '1px solid rgba(139, 92, 246, 0.4)', color: '#a78bfa', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', marginBottom: '16px' }}>
-                ✈️
-              </div>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#a78bfa', marginBottom: '10px' }}>AtherMind AeroPulse</h3>
-              <p style={{ fontSize: '0.88rem', lineHeight: '1.65', color: 'rgba(255,255,255,0.82)', marginBottom: '16px' }}>
-                Aviation AI & Flight Telemetry Intelligence. Parses ACARS, FOQA, and turbofan EHM datalinks to predict engine decay, cut Aircraft-on-Ground (AOG) delays by 50%, and automate EASA/FAA compliance logs.
-              </p>
-              <Link href="/products" style={{ fontSize: '0.82rem', fontWeight: 700, color: '#a78bfa', textDecoration: 'none' }}>
-                Explore AeroPulse Datalink Engine →
-              </Link>
-            </div>
+          {/* Layer Selector Tabs */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(4, 1fr)',
+              gap: '10px',
+              marginBottom: '1.75rem',
+            }}
+            className="about-arch-tabs"
+          >
+            {archTabs.map((tab, idx) => {
+              const isActive = activeArchTab === idx;
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  onClick={() => setActiveArchTab(idx)}
+                  style={{
+                    padding: '12px 14px',
+                    borderRadius: '8px',
+                    border: `1px solid ${isActive ? 'var(--brand-blue)' : 'rgba(85, 164, 255, 0.18)'}`,
+                    backgroundColor: isActive ? 'var(--brand-blue)' : '#111c30',
+                    color: isActive ? '#070d18' : '#ffffff',
+                    fontWeight: 750,
+                    fontSize: '0.82rem',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    boxShadow: isActive ? '0 4px 16px rgba(85, 164, 255, 0.25)' : 'none',
+                    textAlign: 'center',
+                  }}
+                >
+                  <span>{tab.badge.split('—')[1] || tab.badge}</span>
+                </button>
+              );
+            })}
           </div>
 
-          {/* KEY CORE ENGINEERING PILLARS */}
-          <div className="principles-section scroll-reveal" style={{ marginTop: '54px' }}>
-            <div className="section-header" style={{ marginBottom: '24px', textAlign: 'center' }}>
-              <h3 style={{ fontSize: '1.4rem', fontWeight: 800 }}>Engineering Standards</h3>
+          {/* Active Layer Details Board */}
+          <MotionCard
+            className="card-enterprise"
+            style={{
+              backgroundColor: '#111c30',
+              border: '1px solid rgba(85, 164, 255, 0.25)',
+              borderRadius: 'var(--radius-lg)',
+              padding: 'clamp(1.75rem, 3vw, 2.75rem)',
+              boxShadow: 'var(--shadow-lg)',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px', marginBottom: '0.75rem' }}>
+              <span style={{ fontSize: '0.74rem', fontWeight: 800, color: 'var(--brand-blue)', letterSpacing: '0.1em' }}>
+                {currentTab.badge}
+              </span>
+              <span style={{ fontSize: '0.72rem', color: '#22d3ee', fontWeight: 700, backgroundColor: 'rgba(34, 211, 238, 0.12)', padding: '3px 10px', borderRadius: 'var(--radius-full)' }}>
+                VERIFIED ARCHITECTURE
+              </span>
             </div>
-            <div className="principles-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
-              <div className="principle-card glass-panel scroll-reveal" style={{ padding: '20px 22px', borderRadius: '16px' }}>
-                <h4 style={{ fontSize: '1.02rem', fontWeight: 700, marginBottom: '8px' }}>Sub-5ms Inline Intercept</h4>
-                <p style={{ fontSize: '0.84rem', opacity: 0.85, lineHeight: 1.5 }}>High-throughput C++ and Rust proxy engines built for zero-latency execution.</p>
-              </div>
-              <div className="principle-card glass-panel scroll-reveal" style={{ padding: '20px 22px', borderRadius: '16px' }}>
-                <h4 style={{ fontSize: '1.02rem', fontWeight: 700, marginBottom: '8px' }}>Multi-Model AI Ensembles</h4>
-                <p style={{ fontSize: '0.84rem', opacity: 0.85, lineHeight: 1.5 }}>LSTM, XGBoost, and Graph Neural Networks for real-time anomaly classification.</p>
-              </div>
-              <div className="principle-card glass-panel scroll-reveal" style={{ padding: '20px 22px', borderRadius: '16px' }}>
-                <h4 style={{ fontSize: '1.02rem', fontWeight: 700, marginBottom: '8px' }}>Autonomous ERP Push</h4>
-                <p style={{ fontSize: '0.84rem', opacity: 0.85, lineHeight: 1.5 }}>Automated dispatch to SAP PM, IBM Maximo, AMOS, TRAX, and ServiceNow.</p>
-              </div>
-            </div>
-          </div>
 
-          {/* PARENT COMPANY REDIRECTION BANNER (AGUNA SOLUTIONS) */}
-          <div className="parent-company-banner scroll-reveal">
-            <div className="parent-company-info">
-              <h3>To know more about our parent company</h3>
-              <p>
-                AtherMind is powered by <strong>Aguna Solutions Pvt. Ltd.</strong> — a global leader in AI, DevSecOps, 24/7 Managed NOC/SOC Services, and Cloud Native Digital Transformation. Visit our corporate portal for company history, executive leadership, and enterprise IT services.
-              </p>
-            </div>
-            <a
-              href="https://www.agunasolutions.com/about"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="parent-company-btn"
+            <h3 style={{ fontSize: 'clamp(1.25rem, 2vw, 1.65rem)', fontWeight: 800, color: '#ffffff', marginBottom: '0.85rem' }}>
+              {currentTab.title}
+            </h3>
+
+            <p style={{ fontSize: '0.96rem', color: 'var(--text-secondary)', lineHeight: '1.65', marginBottom: '1.75rem', maxWidth: '900px' }}>
+              {currentTab.summary}
+            </p>
+
+            {/* 4 Technical Specs */}
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(4, 1fr)',
+                gap: '12px',
+                marginBottom: '1.75rem',
+              }}
+              className="about-specs-grid"
             >
-              <span>Learn More About Aguna Solutions</span>
-              <span>↗</span>
-            </a>
-          </div>
+              {currentTab.specs.map((spec, sIdx) => (
+                <div
+                  key={sIdx}
+                  style={{
+                    backgroundColor: 'rgba(7, 13, 24, 0.8)',
+                    padding: '12px 14px',
+                    borderRadius: '8px',
+                    border: '1px solid rgba(85, 164, 255, 0.15)',
+                  }}
+                >
+                  <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 600 }}>{spec.label}</div>
+                  <div style={{ fontSize: '1.05rem', fontWeight: 800, color: 'var(--brand-blue)', marginTop: '4px' }}>{spec.val}</div>
+                </div>
+              ))}
+            </div>
 
+            {/* Core Capability Badges */}
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', paddingTop: '1.25rem', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
+              {currentTab.features.map((feat, fIdx) => (
+                <span
+                  key={fIdx}
+                  style={{
+                    fontSize: '0.76rem',
+                    fontWeight: 650,
+                    color: '#e2e8f0',
+                    backgroundColor: 'rgba(15, 23, 42, 0.8)',
+                    border: '1px solid rgba(255, 255, 255, 0.12)',
+                    padding: '5px 12px',
+                    borderRadius: '6px',
+                  }}
+                >
+                  ✓ {feat}
+                </span>
+              ))}
+            </div>
+          </MotionCard>
         </div>
       </section>
+
+      {/* 5. COMPLIANCE, CERTIFICATION & SOVEREIGN STANDARDS */}
+      <section className="section-spacing" style={{ backgroundColor: 'var(--bg-subtle)', paddingTop: '3.5rem', paddingBottom: '4rem' }}>
+        <div className="container" style={{ maxWidth: '1180px' }}>
+          <div className="section-header text-center" style={{ marginBottom: '2.75rem' }}>
+            <span className="badge-pill badge-pill-blue">Statutory Governance</span>
+            <h2 className="text-h2">
+              Enterprise Trust &amp; <span className="text-blue-gradient">Sovereign Compliance</span>
+            </h2>
+            <p className="section-subtitle" style={{ maxWidth: '720px', margin: '0 auto' }}>
+              Built to meet the highest regulatory standards across defense, civil aviation, banking, and data protection authorities.
+            </p>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px' }} className="about-standards-grid">
+            {standards.map((std, idx) => (
+              <div
+                key={idx}
+                className="card-enterprise"
+                style={{
+                  backgroundColor: '#111c30',
+                  border: '1px solid rgba(85, 164, 255, 0.18)',
+                  borderRadius: 'var(--radius-md)',
+                  padding: '1.35rem',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+                  <span style={{ fontSize: '0.68rem', fontWeight: 800, color: 'var(--brand-blue)', letterSpacing: '0.08em' }}>
+                    {std.tag}
+                  </span>
+                  <span style={{ fontSize: '0.66rem', fontWeight: 700, color: '#22d3ee', backgroundColor: 'rgba(34, 211, 238, 0.1)', padding: '2px 7px', borderRadius: '4px' }}>
+                    {std.badge}
+                  </span>
+                </div>
+
+                <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#ffffff', marginBottom: '6px' }}>
+                  {std.title}
+                </h3>
+
+                <p style={{ fontSize: '0.84rem', color: 'var(--text-muted)', lineHeight: '1.5', margin: '0' }}>
+                  {std.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 6. EVOLUTION TIMELINE SECTION */}
+      <section className="section-spacing" style={{ paddingTop: '3.5rem', paddingBottom: '4rem' }}>
+        <div className="container" style={{ maxWidth: '1180px' }}>
+          <div className="section-header text-left" style={{ marginBottom: '2.5rem' }}>
+            <span className="badge-pill badge-pill-silver">Historical Trajectory</span>
+            <h2 className="text-h2">
+              Our Journey in <span className="text-blue-gradient">Deep-Tech R&amp;D</span>
+            </h2>
+            <p className="section-subtitle" style={{ maxWidth: '680px' }}>
+              From initial eBPF socket intercept algorithms to an ecosystem deployed across multi-regional enterprise infrastructure.
+            </p>
+          </div>
+
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(5, 1fr)',
+              gap: '12px',
+            }}
+            className="about-timeline-grid"
+          >
+            {timelineEvents.map((evt, eIdx) => (
+              <div
+                key={eIdx}
+                className="card-enterprise"
+                style={{
+                  backgroundColor: '#111c30',
+                  border: '1px solid rgba(85, 164, 255, 0.2)',
+                  borderRadius: 'var(--radius-md)',
+                  padding: '1.25rem 1rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+              >
+                <div style={{ fontSize: '1.8rem', fontWeight: 900, color: 'var(--brand-blue)', lineHeight: 1, marginBottom: '6px' }}>
+                  {evt.year}
+                </div>
+                <div style={{ fontSize: '0.64rem', fontWeight: 800, color: '#22d3ee', letterSpacing: '0.08em', marginBottom: '8px' }}>
+                  {evt.badge}
+                </div>
+                <h3 style={{ fontSize: '0.98rem', fontWeight: 750, color: '#ffffff', marginBottom: '8px', lineHeight: '1.3' }}>
+                  {evt.title}
+                </h3>
+                <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: '1.5', margin: '0', flexGrow: 1 }}>
+                  {evt.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 7. AGUNA SOLUTIONS PARENT ECOSYSTEM & CALL TO ACTION */}
+      <section className="section-spacing" style={{ backgroundColor: 'var(--bg-subtle)', paddingTop: '3.5rem', paddingBottom: '4rem' }}>
+        <div className="container" style={{ maxWidth: '1180px' }}>
+          <div
+            className="card-dark"
+            style={{
+              borderRadius: 'var(--radius-lg)',
+              padding: 'clamp(2.25rem, 4vw, 3.5rem)',
+              textAlign: 'center',
+              border: '1px solid rgba(85, 164, 255, 0.25)',
+              background: 'linear-gradient(135deg, #111c30 0%, #070d18 100%)',
+              boxShadow: 'var(--shadow-xl)',
+            }}
+          >
+            <span className="badge-pill badge-pill-blue" style={{ marginBottom: '1rem' }}>
+              AGUNA SOLUTIONS ENTERPRISE BACKING
+            </span>
+            <h3 style={{ fontSize: 'clamp(1.5rem, 2.5vw, 2.2rem)', fontWeight: 800, color: '#ffffff', marginBottom: '0.85rem' }}>
+              Partner with Aguna Solutions Deep-Tech Engineering
+            </h3>
+            <p style={{ fontSize: '0.96rem', color: 'var(--text-secondary)', maxWidth: '680px', margin: '0 auto 2rem auto', lineHeight: '1.65' }}>
+              Our systems architects conduct tailored proof-of-concept evaluations measuring kernel eBPF overhead, LSTM failure forecasting models, and zero-trust sovereign compliance for your infrastructure.
+            </p>
+            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+              <Link href="/contact" className="btn btn-primary btn-lg">
+                <span>Request Benchmark Proof-of-Concept</span>
+                <span className="btn-arrow">→</span>
+              </Link>
+              <Link href="/services" className="btn btn-secondary btn-lg">
+                <span>Explore 24/7 NOC &amp; SOC Operations</span>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <style jsx>{`
+        @media (max-width: 1024px) {
+          .about-hero-grid {
+            grid-template-columns: 1fr !important;
+          }
+          .about-metrics-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+          .about-timeline-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+          .about-standards-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+        }
+        @media (max-width: 768px) {
+          .about-pillars-grid {
+            grid-template-columns: 1fr !important;
+          }
+          .about-arch-tabs {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+          .about-specs-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+          .about-timeline-grid {
+            grid-template-columns: 1fr !important;
+          }
+          .about-standards-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+        @media (max-width: 520px) {
+          .about-metrics-grid {
+            grid-template-columns: 1fr !important;
+          }
+          .about-arch-tabs {
+            grid-template-columns: 1fr !important;
+          }
+          .about-specs-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

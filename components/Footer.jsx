@@ -1,24 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 export default function Footer() {
-  const [theme, setTheme] = useState('dark');
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    setTheme(savedTheme);
-    document.documentElement.setAttribute('data-theme', savedTheme);
-  }, []);
-
-  const toggleTheme = () => {
-    const nextTheme = theme === 'dark' ? 'light' : 'dark';
-    setTheme(nextTheme);
-    localStorage.setItem('theme', nextTheme);
-    document.documentElement.setAttribute('data-theme', nextTheme);
-  };
-
   const scrollToTop = (e) => {
     e.preventDefault();
     if (typeof window !== 'undefined') {
@@ -27,94 +11,148 @@ export default function Footer() {
   };
 
   return (
-    <footer className="footer" style={{ borderTop: '1px solid rgba(203, 213, 225, 0.15)', paddingTop: '32px', paddingBottom: '32px' }}>
+    <footer className="site-footer">
       <div className="container">
-        <div className="footer-compact-main" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px' }}>
-          <div className="footer-brand-section">
-            <Link href="/about" style={{ textDecoration: 'none' }}>
-              <p className="brand-mini-tagline" style={{ cursor: 'pointer' }}>CODE · SHIELD · EVOLVE</p>
+        <div className="footer-grid">
+          {/* Column 1: Brand & Slogan */}
+          <div>
+            <Link href="/" style={{ textDecoration: 'none' }}>
+              <span style={{ fontSize: '1.4rem', fontWeight: 900, color: '#ffffff', letterSpacing: '0.05em' }}>
+                ATHERMIND
+              </span>
             </Link>
-          </div>
-
-          <div className="footer-nav-pills">
-            <Link href="/" className="footer-nav-link">Home</Link>
-            <Link href="/products" className="footer-nav-link">Products</Link>
-            <Link href="/services" className="footer-nav-link">Services</Link>
-            <Link href="/clients" className="footer-nav-link">Clients</Link>
-            <Link href="/about" className="footer-nav-link">About Us</Link>
-            <Link href="/contact" className="footer-nav-link">Contacts</Link>
-          </div>
-
-          <div className="footer-right-section" style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
-            <div className="compliance-pills" style={{ display: 'flex', gap: '8px' }}>
-              <Link href="/about" className="comp-badge" style={{ textDecoration: 'none', cursor: 'pointer' }}>🛡️ ISO 27001</Link>
-              <Link href="/about" className="comp-badge" style={{ textDecoration: 'none', cursor: 'pointer' }}>🔒 SOC2 Ready</Link>
-              <Link href="/services" className="comp-badge" style={{ textDecoration: 'none', cursor: 'pointer' }}>🌐 99.99% SLA</Link>
+            <div className="footer-brand-tagline">CODE · SHIELD · EVOLVE</div>
+            <p className="footer-brand-desc">
+              An enterprise technology & cybersecurity platform by Aguna Solutions. Powering zero-trust database security, AI digital twins, and autonomous telemetry for mission-critical infrastructure.
+            </p>
+            <div style={{ marginTop: '1.25rem', display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+              <span style={{ fontSize: '0.74rem', fontWeight: 700, padding: '4px 10px', borderRadius: '4px', background: 'rgba(255,255,255,0.08)', color: '#cbd5e1', border: '1px solid rgba(255,255,255,0.12)' }}>
+                🛡️ ISO 27001
+              </span>
+              <span style={{ fontSize: '0.74rem', fontWeight: 700, padding: '4px 10px', borderRadius: '4px', background: 'rgba(255,255,255,0.08)', color: '#cbd5e1', border: '1px solid rgba(255,255,255,0.12)' }}>
+                🔒 SOC 2 Ready
+              </span>
+              <span style={{ fontSize: '0.74rem', fontWeight: 700, padding: '4px 10px', borderRadius: '4px', background: 'rgba(255,255,255,0.08)', color: '#cbd5e1', border: '1px solid rgba(255,255,255,0.12)' }}>
+                ⚡ NIST SP 800-207
+              </span>
             </div>
+          </div>
 
-            {/* UPWARD ARROW BUTTON WITH RELIABLE SMOOTH SCROLL */}
-            <button
-              type="button"
-              onClick={scrollToTop}
-              className="scroll-top-btn"
-              title="Back to Top"
-              style={{ cursor: 'pointer', background: 'transparent', border: '1px solid rgba(20, 184, 166, 0.4)', borderRadius: '50%', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#22d3ee', fontWeight: 800 }}
-            >
-              ↑
-            </button>
+          {/* Column 2: Products */}
+          <div>
+            <h4 className="footer-col-title">Enterprise Products</h4>
+            <ul className="footer-nav-list">
+              <li>
+                <Link href="/products#overview" className="footer-nav-link">
+                  AtherMind IntelliDAM
+                </Link>
+              </li>
+              <li>
+                <Link href="/products#capabilities" className="footer-nav-link">
+                  Metronik PDM Digital Twin
+                </Link>
+              </li>
+              <li>
+                <Link href="/products#use-cases" className="footer-nav-link">
+                  AeroPulse Aviation AI
+                </Link>
+              </li>
+              <li>
+                <Link href="/products" className="footer-nav-link" style={{ color: 'var(--brand-blue)', fontWeight: 600 }}>
+                  View All Products →
+                </Link>
+              </li>
+            </ul>
+          </div>
 
-            {/* THEME TOGGLE BUTTON */}
-            <button
-              type="button"
-              onClick={toggleTheme}
-              className="btn btn-outline btn-sm"
-              aria-label="Toggle Light/Dark Theme"
-              title="Toggle Light or Dark Theme"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '8px 18px',
-                borderRadius: '20px',
-                fontSize: '0.82rem',
-                fontWeight: 700,
-                background: theme === 'dark' ? 'rgba(20, 184, 166, 0.15)' : 'rgba(15, 23, 42, 0.08)',
-                borderColor: theme === 'dark' ? 'rgba(34, 211, 238, 0.4)' : 'rgba(15, 23, 42, 0.25)',
-                color: theme === 'dark' ? '#22d3ee' : '#0f172a',
-                cursor: 'pointer',
-                transition: 'all 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
-              }}
-            >
-              {theme === 'dark' ? (
-                <>
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
-                    <circle cx="12" cy="12" r="5"></circle>
-                    <line x1="12" y1="1" x2="12" y2="3"></line>
-                    <line x1="12" y1="21" x2="12" y2="23"></line>
-                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                    <line x1="1" y1="12" x2="3" y2="12"></line>
-                    <line x1="21" y1="12" x2="23" y2="12"></line>
-                  </svg>
-                  <span>Light</span>
-                </>
-              ) : (
-                <>
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                  </svg>
-                  <span>Dark</span>
-                </>
-              )}
-            </button>
+          {/* Column 3: Capabilities & Services */}
+          <div>
+            <h4 className="footer-col-title">Capabilities & Services</h4>
+            <ul className="footer-nav-list">
+              <li>
+                <Link href="/services" className="footer-nav-link">
+                  24/7 Managed NOC & SOC
+                </Link>
+              </li>
+              <li>
+                <Link href="/services" className="footer-nav-link">
+                  VAPT & Offensive Security
+                </Link>
+              </li>
+              <li>
+                <Link href="/services" className="footer-nav-link">
+                  Cloud Native DevSecOps
+                </Link>
+              </li>
+              <li>
+                <Link href="/services" className="footer-nav-link">
+                  Enterprise AI & RPA
+                </Link>
+              </li>
+              <li>
+                <Link href="/clients" className="footer-nav-link">
+                  Client Case Studies
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 4: Company & Contact */}
+          <div>
+            <h4 className="footer-col-title">Aguna Solutions</h4>
+            <ul className="footer-nav-list">
+              <li>
+                <Link href="/about" className="footer-nav-link">
+                  About AtherMind
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="footer-nav-link">
+                  Talk to an Expert
+                </Link>
+              </li>
+              <li style={{ fontSize: '0.82rem', color: 'var(--text-light-muted)', lineHeight: '1.5', marginTop: '0.5rem' }}>
+                7th Floor, Eco Tower, Sector 125, Noida, Uttar Pradesh, India
+              </li>
+              <li>
+                <a href="mailto:info@agunasolutions.com" className="footer-nav-link" style={{ color: 'var(--brand-blue)' }}>
+                  info@agunasolutions.com
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
 
-        <div className="footer-bottom-line" style={{ marginTop: '24px', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px' }}>
-          <div>© 2026 Aguna Solutions Pvt. Ltd. (AtherMind). All Rights Reserved.</div>
+        {/* Bottom Line */}
+        <div className="footer-bottom-bar">
+          <div>
+            © 2026 Aguna Solutions Pvt. Ltd. (AtherMind). All Rights Reserved.
+          </div>
+
           <div className="footer-legal-links">
-            <Link href="/contact">Privacy Policy</Link> • <Link href="/contact">Terms of Service</Link> •{' '}
-            <Link href="/contact">Security</Link>
+            <Link href="/contact" className="footer-nav-link">
+              Privacy Policy
+            </Link>
+            <Link href="/contact" className="footer-nav-link">
+              Terms of Service
+            </Link>
+            <Link href="/contact" className="footer-nav-link">
+              Security Compliance
+            </Link>
+            <button
+              type="button"
+              onClick={scrollToTop}
+              aria-label="Back to top"
+              style={{
+                background: 'none',
+                border: 'none',
+                color: 'var(--brand-blue)',
+                cursor: 'pointer',
+                fontWeight: 700,
+              }}
+            >
+              Top ↑
+            </button>
           </div>
         </div>
       </div>
